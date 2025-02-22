@@ -35,7 +35,6 @@
  */
 import { NextResponse } from "next/server";
 import { connectDB } from "@/lib/db";
-import sql from "mssql";
 import { checkToken } from "@/lib/checkToken";
 
 export async function GET(req: Request) {

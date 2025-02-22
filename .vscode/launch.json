@@ -1,0 +1,17 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Next.js: Development",
+      "type": "node",
+      "request": "launch",
+      "skipFiles": ["<node_internals>/**"],
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "dev"], // Just run the 'dev' script now, no need for --inspect-brk here
+      "port": 3001, // Ensure the port matches the one you're using
+      "console": "integratedTerminal",
+      "stopOnEntry": true, // Stop on the first line of execution (equivalent to --inspect-brk)
+      "sourceMaps": true
+    }
+  ]
+}

@@ -71,6 +71,7 @@ import { NextResponse } from "next/server";
 import { connectDB } from "@/lib/db";
 import sql from "mssql";
 import jwt from "jsonwebtoken";
+import { Encrypt } from "@/lib/decryptPass";
 
 const JWT_SECRET = process.env.JWT_SECRET || "your-secret-key";
 
@@ -89,29 +90,26 @@ export async function POST(req: Request) {
         { status: 400 }
       );
     }
-
+    console.log({ username, password });
     const db = await connectDB();
-    // const result = await db
-    //   ?.request()
-    //   .input("UserName", sql.NVarChar, username)
-    //   .input("PassCode", sql.NVarChar, username)
-    //   .execute("Users_Login0"); // اجرای Stored Procedure
-    // if (!result || !result?.recordset?.length) {
-    //   return NextResponse.json(
-    //     { error: "Username or password is wrong " },
-    //     { status: 404 }
-    //   );
-    // }
-    // const user = result.recordset[0];
-    const user = {
-      User_ID: 1,
-      User_Name: "John Doe",
-    };
+    const encryptedPass = Encrypt(password);
+    const result = await db
+      ?.request()
+      .input("UserName", sql.NVarChar, username)
+      .input("PassCode", sql.NVarChar, encryptedPass)
+      .execute("Users_Login"); // اجرای Stored Procedure
+    if (!result || !result?.recordset?.length) {
+      return NextResponse.json(
+        { error: "Username or password is wrong " },
+        { status: 404 }
+      );
+    }
+    const user = result.recordset[0];
     const token = jwt.sign(
       { id: user.User_ID, username: user.User_Name },
       JWT_SECRET,
       {
-        expiresIn: "10s", // اعتبار توکن 1 ساعت
+        expiresIn: "1h", // اعتبار توکن 1 ساعت
       }
     );
 

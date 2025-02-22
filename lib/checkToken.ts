@@ -1,4 +1,3 @@
-import { NextResponse } from "next/server";
 import jwt from "jsonwebtoken";
 
 const JWT_SECRET = process.env.JWT_SECRET || "your-secret-key";
@@ -22,7 +21,7 @@ export const checkToken = (req: Request) => {
       return { success: false, error: "Invalid or expired token" };
     }
     return { success: true, data: decoded };
-  } catch (error) {
+  } catch {
     return { success: false, error: "Invalid or expired token" };
   }
 };
