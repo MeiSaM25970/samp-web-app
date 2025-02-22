@@ -17,12 +17,12 @@
  *                 required: true
  *                 type: string
  *                 description: The username of the user.
- *                 example: "johndoe"
+ *                 example: "admin"
  *               password:
  *                 required: true
  *                 type: string
  *                 description: The password for the user.
- *                 example: "securepassword"
+ *                 example: "326"
  *     responses:
  *       200:
  *         description: Successfully logged in. Returns user data.
