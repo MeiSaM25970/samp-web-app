@@ -93,6 +93,7 @@ export async function POST(req: Request) {
     console.log({ username, password });
     const db = await connectDB();
     const encryptedPass = Encrypt(password);
+    console.log({ encryptedPass });
     const result = await db
       ?.request()
       .input("UserName", sql.NVarChar, username)
