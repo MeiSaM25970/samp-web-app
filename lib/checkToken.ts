@@ -8,19 +8,17 @@ export const checkToken = (req: Request) => {
     return { success: false, error: "Authorization header is missing" };
   }
 
-  // استخراج توکن از هدر
-  const token = authHeader.split(" ")[1]; // فرض بر این است که هدر به شکل "Bearer <token>" است
+  const token = authHeader.split(" ")[1];
   if (!token) {
     return { success: false, error: "Token is missing" };
   }
-  console.log({ token });
-  // اعتبارسنجی توکن
   try {
     const decoded = jwt.verify(token, JWT_SECRET);
     if (!decoded) {
       return { success: false, error: "Invalid or expired token" };
     }
-    return { success: true, data: decoded };
+    const encodeToken = jwt.decode(token);
+    return { success: true, data: encodeToken };
   } catch {
     return { success: false, error: "Invalid or expired token" };
   }

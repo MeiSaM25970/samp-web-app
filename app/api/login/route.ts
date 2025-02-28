@@ -67,16 +67,23 @@
  *                   example: "Internal server error"
  */
 
-import { NextResponse } from "next/server";
 import { connectDB } from "@/lib/db";
 import sql from "mssql";
 import jwt from "jsonwebtoken";
 import { Encrypt } from "@/lib/decryptPass";
+import { NextResponse } from "next/server";
+import { cookies } from "next/headers";
+import { cookieKey } from "@/constant/cookieKey";
 
 const JWT_SECRET = process.env.JWT_SECRET || "your-secret-key";
 
 export async function POST(req: Request) {
   try {
+    if (req.method !== "POST")
+      return NextResponse.json(
+        { error: "Invalid request method" },
+        { status: 405 }
+      );
     const { username, password } = await req.json();
     if (!username) {
       return NextResponse.json(
@@ -90,10 +97,8 @@ export async function POST(req: Request) {
         { status: 400 }
       );
     }
-    console.log({ username, password });
     const db = await connectDB();
     const encryptedPass = Encrypt(password);
-    console.log({ encryptedPass });
     const result = await db
       ?.request()
       .input("UserName", sql.NVarChar, username)
@@ -110,9 +115,16 @@ export async function POST(req: Request) {
       { id: user.User_ID, username: user.User_Name },
       JWT_SECRET,
       {
-        expiresIn: "1h", // اعتبار توکن 1 ساعت
+        expiresIn: "8h", // اعتبار توکن 1 ساعت
       }
     );
+    const cookieStore = await cookies();
+    cookieStore.set(cookieKey.token, token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      maxAge: 60 * 60 * 24 * 7, // یک هفته
+      path: "/",
+    });
 
     return NextResponse.json({ token }, { status: 200 });
   } catch (error) {

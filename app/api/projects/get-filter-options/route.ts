@@ -8,9 +8,11 @@
  *       bearerFormat: JWT
  *   security:
  *     - BearerAuth: []
- * /api/getData:
+ * /api/projects/get-filter-options:
  *   get:
  *     summary: Get user data
+ *     tags:
+ *      - Projects
  *     description: This endpoint fetches user data after validating JWT token.
  *     security:
  *       - BearerAuth: []
@@ -36,6 +38,7 @@
 import { NextResponse } from "next/server";
 import { connectDB } from "@/lib/db";
 import { checkToken } from "@/lib/checkToken";
+import sql from "mssql";
 
 export async function GET(req: Request) {
   try {
@@ -45,15 +48,19 @@ export async function GET(req: Request) {
     }
     console.log({ token });
     const db = await connectDB();
-    // const result = await db?.request().execute("Users_ActionsHistory");
-    // if (!result || !result?.recordset?.length) {
-    //   return NextResponse.json(
-    //     { error: "Username or password is wrong " },
-    //     { status: 404 }
-    //   );
-    // }
-    // const user = result.recordset[0];
-    return NextResponse.json({ token }, { status: 200 });
+    const result = await db
+      ?.request()
+      .input("@sql_mode", sql.NVarChar, "1")
+      // .input("User_ID", sql.NVarChar, token.data?.id
+      // )
+      .execute("PMO_ProjectList");
+    if (!result || !result?.recordset?.length) {
+      return NextResponse.json(
+        { error: "Username or password is wrong " },
+        { status: 404 }
+      );
+    }
+    return NextResponse.json({ data: result?.recordset[0] }, { status: 200 });
   } catch (error) {
     console.error("Stored Procedure Error:", error);
     return NextResponse.json(
