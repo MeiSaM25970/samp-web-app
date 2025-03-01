@@ -1,0 +1,14 @@
+@import "tailwindcss";
+@import "antd/dist/reset.css";
+@import "./fonts-en.css";
+@import "./fonts-fa.css";
+@layer tailwind-base, antd;
+
+:root {
+  --breakPointsXs: 425px;
+  --breakPointsSm: 768px;
+  --breakPointsMd: 992px;
+  --breakPointsLg: 1024px;
+  --breakPointsXl: 1280px;
+  --breakPointsXXl: 1440px;
+}

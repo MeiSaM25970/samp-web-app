@@ -1,0 +1,6 @@
+/* Modal */
+
+.ant-modal-mask {
+  backdrop-filter: blur(2px);
+}
+/*End Modal */

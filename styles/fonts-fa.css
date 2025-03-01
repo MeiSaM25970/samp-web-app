@@ -1,0 +1,30 @@
+@font-face {
+  font-family: IRANSansXFaNum;
+  src: url(/assets/fonts/fa/IRANSansXFaNum-Regular.ttf);
+  font-weight: 400;
+}
+@font-face {
+  font-family: IRANSansXFaNum;
+  src: url(/assets/fonts/fa/IRANSansXFaNum-Medium.ttf);
+  font-weight: 500;
+}
+@font-face {
+  font-family: IRANSansXFaNum;
+  src: url(/assets/fonts/fa/IRANSansXFaNum-Bold.ttf);
+  font-weight: 700;
+}
+@font-face {
+  font-family: IRANSansXFaNum;
+  src: url(/assets/fonts/fa/IRANSansXFaNum-DemiBold.ttf);
+  font-weight: 900;
+}
+@font-face {
+  font-family: Doran;
+  src: url(/assets/fonts/fa/DoranClassicDots-Bold.woff2),
+    url(/assets/fonts/fa/DoranClassicDots-Bold.woff);
+}
+@font-face {
+  font-family: "Doran FaNum";
+  src: url(/assets/fonts/fa/DoranFaNum-Bold.woff2),
+    url(/assets/fonts/fa/DoranFaNum-Bold.woff);
+}

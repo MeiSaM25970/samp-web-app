@@ -1,0 +1,17 @@
+export enum ROUTES {
+  home = "/",
+  auth = "/auth",
+  businessOpportunities = "/business-opportunities",
+  consult = "/consult",
+  foreignCustomers = "/foreign-customers",
+  hsCode = "/hs-code",
+  packingInvoice = "/packing-invoice",
+  invoice = "/packing-invoice/invoice",
+  packing = "/packing-invoice/packing",
+  paymentCalculation = "/payment-calculation",
+  stats = "/stats",
+  blog = "/blog",
+  events = "/events",
+  plans = "/plans",
+  exportValues = "/export-values",
+}
