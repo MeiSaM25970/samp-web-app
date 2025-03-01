@@ -17,8 +17,7 @@ export const checkToken = (req: Request) => {
     if (!decoded) {
       return { success: false, error: "Invalid or expired token" };
     }
-    const encodeToken = jwt.decode(token);
-    return { success: true, data: encodeToken };
+    return { success: true, data: decoded };
   } catch {
     return { success: false, error: "Invalid or expired token" };
   }

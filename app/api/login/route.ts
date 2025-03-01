@@ -74,6 +74,7 @@ import { Encrypt } from "@/lib/decryptPass";
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import { cookieKey } from "@/constant/cookieKey";
+import { createJWT } from "@/lib/token";
 
 const JWT_SECRET = process.env.JWT_SECRET || "your-secret-key";
 
@@ -111,13 +112,17 @@ export async function POST(req: Request) {
       );
     }
     const user = result.recordset[0];
-    const token = jwt.sign(
-      { id: user.User_ID, username: user.User_Name },
-      JWT_SECRET,
-      {
-        expiresIn: "8h", // اعتبار توکن 1 ساعت
-      }
-    );
+    const token = await createJWT({
+      id: user.User_ID,
+      username: user.User_Name,
+    });
+    // const token = jwt.sign(
+    //   { id: user.User_ID, username: user.User_Name },
+    //   JWT_SECRET,
+    //   {
+    //     expiresIn: "8h", // اعتبار توکن 1 ساعت
+    //   }
+    // );
     const cookieStore = await cookies();
     cookieStore.set(cookieKey.token, token, {
       httpOnly: true,

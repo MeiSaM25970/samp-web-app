@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import jwt from "jsonwebtoken";
 import { ITokenData } from "./models/backend";
+import { cookieKey } from "./constant/cookieKey";
+import { verifyJWT } from "./lib/token";
 
 // 1. Specify protected and public routes
 const protectedRoutes = ["/", "/dashboard"];
@@ -13,11 +15,11 @@ export default async function middleware(req: NextRequest) {
   const isProtectedRoute = protectedRoutes.includes(path);
   const isPublicRoute = publicRoutes.includes(path);
 
-  console.log({ path, isProtectedRoute, isPublicRoute });
   // 3. Decrypt the session from the cookie
-  const token = (await cookies()).get("session")?.value;
+  const token = (await cookies()).get(cookieKey.token)?.value;
   let session: ITokenData | undefined;
-  if (token) session = (await jwt.decode(token)) as ITokenData;
+  if (token) session = await verifyJWT(token);
+  console.log({ path, isProtectedRoute, isPublicRoute, token, session });
 
   // 4. Redirect to /login if the user is not authenticated
   if (isProtectedRoute && !session?.id) {
