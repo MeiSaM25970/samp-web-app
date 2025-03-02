@@ -42,7 +42,7 @@ import sql from "mssql";
 
 export async function GET(req: Request) {
   try {
-    const token = checkToken(req);
+    const token = await checkToken();
     if (!token.success) {
       return NextResponse.json({ error: token.error }, { status: 401 });
     }
@@ -53,7 +53,7 @@ export async function GET(req: Request) {
       .input("@sql_mode", sql.NVarChar, "1")
       // .input("User_ID", sql.NVarChar, token.data?.id
       // )
-      .execute("PMO_ProjectList");
+      .execute("dbo.PMO_ProjectList");
     if (!result || !result?.recordset?.length) {
       return NextResponse.json(
         { error: "Username or password is wrong " },

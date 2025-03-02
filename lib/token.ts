@@ -1,11 +1,11 @@
 import { ITokenData } from "@/models/backend";
 import { SignJWT, jwtVerify, decodeProtectedHeader } from "jose";
 
-// کلید مخفی را به صورت آرایه‌ای از بایت‌ها تعریف کنید
-const secret = new TextEncoder().encode(process.env.JWT_SECRET);
+const secretKey = process.env.JWT_SECRET || "jwt_secret_key";
+const secret = new TextEncoder().encode(secretKey);
 
-export async function createJWT(user: { id: number; username: string }) {
-  const token = await new SignJWT({ id: user.id, username: user.username })
+export async function createJWT(user: { id: string; username: string }) {
+  const token = await new SignJWT(user)
     .setProtectedHeader({ alg: "HS256" })
     .setExpirationTime("8h") // اعتبار توکن 8 ساعت
     .sign(secret);
@@ -15,7 +15,6 @@ export async function createJWT(user: { id: number; username: string }) {
 
 export async function verifyJWT(token: string) {
   try {
-    console.log({ token, secret });
     const { payload } = await jwtVerify(token, secret);
     // دسترسی به payload
     const protectedHeader = decodeProtectedHeader(token);
