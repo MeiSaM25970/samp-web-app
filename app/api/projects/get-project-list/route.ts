@@ -43,6 +43,7 @@ import sql from "mssql";
 export async function GET(req: Request) {
   try {
     const token = await checkToken();
+
     if (!token.success) {
       return NextResponse.json({ error: token.error }, { status: 401 });
     }
@@ -50,17 +51,19 @@ export async function GET(req: Request) {
     const db = await connectDB();
     const result = await db
       ?.request()
-      .input("@sql_mode", sql.NVarChar, "1")
-      // .input("User_ID", sql.NVarChar, token.data?.id
-      // )
-      .execute("dbo.PMO_ProjectList");
+      .input("sql_mode", sql.SmallInt, "1")
+      .input("UserID", sql.BigInt, token.data?.id)
+      .input("Prj_PlanGroup", sql.NVarChar, "")
+      .input("Prj_AreaType", sql.NVarChar, "")
+      .input("Prj_SubjectType", sql.NVarChar, "")
+      .input("Prj_TechnicalType", sql.NVarChar, "")
+      .input("Prj_Province", sql.NVarChar, "")
+      .input("Prj_ExecuteState", sql.NVarChar, "")
+      .execute("PMO_ProjectList");
     if (!result || !result?.recordset?.length) {
-      return NextResponse.json(
-        { error: "Username or password is wrong " },
-        { status: 404 }
-      );
+      return NextResponse.json({ data: [] }, { status: 200 });
     }
-    return NextResponse.json({ data: result?.recordset[0] }, { status: 200 });
+    return NextResponse.json({ data: result?.recordset }, { status: 200 });
   } catch (error) {
     console.error("Stored Procedure Error:", error);
     return NextResponse.json(

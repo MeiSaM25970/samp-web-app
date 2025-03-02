@@ -11,7 +11,7 @@ export const checkToken = async () => {
     return { success: false, error: "Token is missing" };
   }
   try {
-    const decoded = verifyJWT(token);
+    const decoded = await verifyJWT(token);
     if (!decoded) {
       return { success: false, error: "Invalid or expired token" };
     }
