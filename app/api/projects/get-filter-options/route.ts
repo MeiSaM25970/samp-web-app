@@ -42,7 +42,7 @@ import sql from "mssql";
 
 export async function GET(req: Request) {
   try {
-    const token = checkToken(req);
+    const token = await checkToken();
     if (!token.success) {
       return NextResponse.json({ error: token.error }, { status: 401 });
     }
