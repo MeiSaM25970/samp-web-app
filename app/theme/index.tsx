@@ -13,6 +13,7 @@ import { StorageKeys } from "../../constants/localStorage";
 
 import { lightColors } from "./ts/light";
 import { darkColors } from "./ts/dark";
+import { ThemeProvider } from "styled-components";
 
 // const language = localStorage.getItem(USER_Language) || null;
 
@@ -80,7 +81,7 @@ export const ThemeContextProvider: FC<PropsWithChildren> = ({ children }) => {
         toggleThemeType,
       }}
     >
-      {children}
+      <ThemeProvider theme={theme}> {children}</ThemeProvider>
     </ThemeContext.Provider>
   );
 };

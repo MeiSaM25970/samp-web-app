@@ -1,5 +1,6 @@
 "use client";
 
+import { ConfigProvider } from "antd";
 import SwaggerUI from "swagger-ui-react";
 import "swagger-ui-react/swagger-ui.css";
 
@@ -8,7 +9,11 @@ type Props = {
 };
 
 function ReactSwagger({ spec }: Props) {
-  return <SwaggerUI spec={spec} />;
+  return (
+    <ConfigProvider direction="ltr">
+      <SwaggerUI spec={spec} />
+    </ConfigProvider>
+  );
 }
 
 export default ReactSwagger;
