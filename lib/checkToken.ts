@@ -1,4 +1,4 @@
-import { cookieKey } from "@/constant/cookieKey";
+import { cookieKey } from "@/constants/cookieKey";
 import { cookies } from "next/headers";
 import { verifyJWT } from "./token";
 

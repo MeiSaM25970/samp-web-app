@@ -72,7 +72,7 @@ import sql from "mssql";
 import { Encrypt } from "@/lib/decryptPass";
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
-import { cookieKey } from "@/constant/cookieKey";
+import { cookieKey } from "@/constants/cookieKey";
 import { createJWT } from "@/lib/token";
 
 export async function POST(req: Request) {
