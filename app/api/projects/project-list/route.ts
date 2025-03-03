@@ -7,7 +7,7 @@
  *       scheme: bearer
  *       bearerFormat: JWT
  * paths:
- *   /api/projects/get-project-list:
+ *   /api/projects/project-list:
  *     post:
  *       summary: Get list of projects
  *       tags:
