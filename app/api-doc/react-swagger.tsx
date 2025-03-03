@@ -1,6 +1,6 @@
 "use client";
 
-import { ConfigProvider } from "antd";
+import styled from "styled-components";
 import SwaggerUI from "swagger-ui-react";
 import "swagger-ui-react/swagger-ui.css";
 
@@ -10,10 +10,19 @@ type Props = {
 
 function ReactSwagger({ spec }: Props) {
   return (
-    <ConfigProvider direction="ltr">
+    <ReactSwaggerStyles>
       <SwaggerUI spec={spec} />
-    </ConfigProvider>
+    </ReactSwaggerStyles>
   );
 }
 
 export default ReactSwagger;
+
+const ReactSwaggerStyles = styled.div`
+  direction: ltr !important;
+  font-family: sans-serif !important;
+
+  * {
+    font-family: sans-serif !important;
+  }
+`;

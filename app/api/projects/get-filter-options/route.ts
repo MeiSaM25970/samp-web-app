@@ -6,65 +6,156 @@
  *       type: http
  *       scheme: bearer
  *       bearerFormat: JWT
- *   security:
- *     - BearerAuth: []
  * /api/projects/get-filter-options:
  *   get:
- *     summary: Get user data
+ *     summary: Get filter options
  *     tags:
- *      - Projects
- *     description: This endpoint fetches user data after validating JWT token.
+ *       - Projects
+ *     description: This endpoint fetches filter options data after validating JWT token.
  *     security:
  *       - BearerAuth: []
  *     responses:
  *       200:
- *         description: User data retrieved successfully.
+ *         description: Filter options retrieved successfully.
  *         content:
  *           application/json:
  *             schema:
  *               type: object
  *               properties:
- *                 id:
- *                   type: integer
- *                 username:
- *                   type: string
- *                 email:
- *                   type: string
+ *                 success:
+ *                   type: boolean
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     planGroups:
+ *                       type: array
+ *                       items:
+ *                         type: object
+ *                         properties:
+ *                           label:
+ *                             type: string
+ *                           value:
+ *                             type: integer
+ *                     areaType:
+ *                       type: array
+ *                       items:
+ *                         type: object
+ *                         properties:
+ *                           label:
+ *                             type: string
+ *                           value:
+ *                             type: integer
+ *                     subjectType:
+ *                       type: array
+ *                       items:
+ *                         type: object
+ *                         properties:
+ *                           label:
+ *                             type: string
+ *                           value:
+ *                             type: integer
+ *                     technicalType:
+ *                       type: array
+ *                       items:
+ *                         type: object
+ *                         properties:
+ *                           label:
+ *                             type: string
+ *                           value:
+ *                             type: integer
+ *                     province:
+ *                       type: array
+ *                       items:
+ *                         type: object
+ *                         properties:
+ *                           label:
+ *                             type: string
+ *                           value:
+ *                             type: integer
+ *                     executeState:
+ *                       type: array
+ *                       items:
+ *                         type: object
+ *                         properties:
+ *                           label:
+ *                             type: string
+ *                           value:
+ *                             type: integer
  *       401:
  *         description: Unauthorized - Invalid or missing token.
  *       500:
  *         description: Internal server error.
  */
+
 import { NextResponse } from "next/server";
 import { connectDB } from "@/lib/db";
 import { checkToken } from "@/lib/checkToken";
-import sql from "mssql";
 
-export async function GET(req: Request) {
+export async function GET() {
   try {
     const token = await checkToken();
     if (!token.success) {
       return NextResponse.json({ error: token.error }, { status: 401 });
     }
-    console.log({ token });
     const db = await connectDB();
-    const result = await db
-      ?.request()
-      .input("@sql_mode", sql.NVarChar, "1")
-      // .input("User_ID", sql.NVarChar, token.data?.id
-      // )
-      .execute("PMO_ProjectList");
-    if (!result || !result?.recordset?.length) {
+    const results = await Promise.allSettled([
+      db?.request().query("SELECT * FROM Pmo__PlanGroup"),
+      db?.request().query("SELECT * FROM Pmo__AreaType"),
+      db?.request().query("SELECT * FROM Pmo__SubjectType"),
+      db?.request().query("SELECT * FROM Pmo__TechnicalType"),
+      db?.request().query("SELECT * FROM Pmo__Province"),
+      db?.request().query("SELECT * FROM Pmo__ExecuteState"),
+    ]);
+
+    const [
+      planGroups,
+      areaType,
+      subjectType,
+      technicalType,
+      province,
+      executeState,
+    ] = results.map((result) =>
+      result.status === "fulfilled" ? result.value.recordset : null
+    );
+    if (
+      !planGroups &&
+      !areaType &&
+      !subjectType &&
+      !technicalType &&
+      !province &&
+      !executeState
+    ) {
       return NextResponse.json(
-        { error: "Username or password is wrong " },
+        { success: false, error: "No data found" },
         { status: 404 }
       );
     }
-    return NextResponse.json({ data: result?.recordset[0] }, { status: 200 });
+    const data = {
+      planGroups:
+        planGroups?.map((i) => ({
+          label: i.PlanGroup_Name,
+          value: i.PlanGroup_ID,
+        })) || [],
+      areaType:
+        areaType?.map((i) => ({ label: i.Pat_Name, value: i.Pat_ID })) || [],
+      subjectType:
+        subjectType?.map((i) => ({ label: i.Pst_Name, value: i.Pst_ID })) || [],
+      technicalType:
+        technicalType?.map((i) => ({ label: i.Ptt_Name, value: i.Ptt_ID })) ||
+        [],
+      province:
+        province?.map((i) => ({
+          label: i.province_Name,
+          value: i.province_ID,
+        })) || [],
+      executeState:
+        executeState?.map((i) => ({ label: i.Ps_Name, value: i.Ps_ID })) || [],
+    };
+    return NextResponse.json({ success: true, data }, { status: 200 });
   } catch (error) {
-    console.error("Stored Procedure Error:", error);
+    console.error("Error:", error);
     return NextResponse.json(
-      { error: "Internal server error" },
+      { error: "Internal server error", success: false },
       { status: 500 }
     );
   }
