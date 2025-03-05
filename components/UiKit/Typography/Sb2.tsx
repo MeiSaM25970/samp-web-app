@@ -4,8 +4,8 @@ import { breakPointsSm } from "@/constants/screen";
 import { FC, PropsWithChildren } from "react";
 import styled from "styled-components";
 
-// interface IProps extends React.HTMLAttributes<HTMLDivElement> {}
-export const Sb2: FC<PropsWithChildren> = (props) => {
+interface IProps extends React.HTMLAttributes<HTMLDivElement> {}
+export const Sb2: FC<IProps & PropsWithChildren> = (props) => {
   return <Container {...props} />;
 };
 
