@@ -34,4 +34,9 @@ export const LoginContainer = styled(Row)`
     width: 100%;
     background: ${(props) => props.theme.colors.icon.icDef2};
   }
+  .rectangleHolder {
+    height: 2.2px;
+    width: 100%;
+    background: ${(props) => props.theme.colors.icon.icDef2};
+  }
 `;
