@@ -3,7 +3,7 @@ import type { RefSelectProps, TreeSelectProps } from "antd";
 import { forwardRef } from "react";
 import { TreeSelect as AntTreeSelect } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
-import { useTheme } from "src/theme";
+import { useTheme } from "@/app/theme";
 import Icons from "espil-icons";
 import { ClearIcon } from "../ClearIcon";
 import styled from "styled-components";

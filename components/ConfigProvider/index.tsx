@@ -6,7 +6,6 @@ import { ThemeProvider } from "styled-components";
 import fa_IR from "antd/locale/fa_IR";
 import en_US from "antd/locale/en_US";
 import { useTheme } from "@/app/theme";
-import { useLanguage } from "@/store/languages";
 import { GlobalStyle } from "@/app/styles/global.style";
 
 interface IProps {
@@ -17,7 +16,6 @@ const ConfigProviders: FC<IProps> = ({ children }) => {
   const overrideToken = useOverride();
   const { mobile } = useResponsive();
   const { theme } = useTheme();
-  const { isRtl } = useLanguage();
   const antdTheme: ThemeConfig = {
     components: overrideToken,
     cssVar: true,
@@ -28,8 +26,8 @@ const ConfigProviders: FC<IProps> = ({ children }) => {
       <ConfigProvider
         theme={antdTheme}
         componentSize={mobile ? "small" : "middle"}
-        direction={isRtl ? "rtl" : "ltr"}
-        locale={isRtl ? fa_IR : en_US}
+        direction={"rtl"}
+        locale={fa_IR}
       >
         <GlobalStyle />
         {children}

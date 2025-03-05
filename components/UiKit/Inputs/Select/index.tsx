@@ -4,7 +4,7 @@ import { forwardRef } from "react";
 import { Select as AntSelect } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 import Icons from "espil-icons";
-import { useTheme } from "src/theme";
+import { useTheme } from "@/app/theme";
 import { ClearIcon } from "../ClearIcon";
 import styled from "styled-components";
 

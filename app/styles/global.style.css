@@ -1,6 +1,7 @@
 @import "antd/dist/reset.css";
-@import "./fonts-en.css";
-@import "./fonts-fa.css";
+/* @tailwind base; */
+@tailwind components;
+@tailwind utilities;
 @layer tailwind-base, antd;
 
 :root {
