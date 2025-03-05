@@ -12,11 +12,13 @@ export const checkToken = async () => {
   }
   try {
     const decoded = await verifyJWT(token);
+    console.log({ decoded });
     if (!decoded) {
       return { success: false, error: "Invalid or expired token" };
     }
     return { success: true, data: decoded };
   } catch {
+    console.log("here 2");
     return { success: false, error: "Invalid or expired token" };
   }
 };

@@ -25,6 +25,6 @@ export async function verifyJWT(token: string) {
     return userData;
   } catch (error) {
     console.error("Invalid token:", error);
-    cookies().delete(cookieKey.token);
+    return undefined;
   }
 }
