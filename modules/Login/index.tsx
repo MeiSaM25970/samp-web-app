@@ -5,15 +5,16 @@ import { Col, Flex, Form } from "antd";
 import Image from "next/image";
 import { S3 } from "@/components/UiKit/Typography";
 import { FormItem } from "@/components/UiKit/FormItem";
-import { InputUikit } from "@/components/UiKit/Inputs";
+import { InputUikit, PasswordUikit } from "@/components/UiKit/Inputs";
 import { useForm } from "antd/es/form/Form";
+import { UserNameUikit } from "@/components/UiKit/Inputs/UserName";
 
 export const Login: FC = () => {
   const [form] = useForm();
   return (
     <Form form={form}>
       <LoginContainer>
-        <Col md={6} sm={12} xs={12} className="loginFormContainer">
+        <Col md={6} xs={22} lg={5} className="loginFormContainer">
           <Flex justify="center" align="center" vertical>
             <Image
               src="/images/loginFormLogo.svg"
@@ -29,9 +30,20 @@ export const Login: FC = () => {
               </Flex>
             </div>
           </Flex>
-          <Flex>
-            <FormItem name={"userName"} label="نام کاربری">
-              <InputUikit />
+          <Flex vertical>
+            <FormItem
+              name={"userName"}
+              label="نام کاربری"
+              rules={[{ required: true }]}
+            >
+              <UserNameUikit />
+            </FormItem>
+            <FormItem
+              name={"userName"}
+              label="رمز عبور"
+              rules={[{ required: true }]}
+            >
+              <PasswordUikit />
             </FormItem>
           </Flex>
         </Col>

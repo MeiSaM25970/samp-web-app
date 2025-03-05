@@ -6,6 +6,7 @@ import { App } from "antd";
 import StyledComponentsRegistry from "@/lib/registry";
 import { AppProvider } from "@/context/AppContext";
 import "./styles/global.style.css";
+import ConfigProviders from "@/components/ConfigProvider";
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -50,8 +51,10 @@ export default function RootLayout({
             <StyledComponentsRegistry>
               <ThemeContextProvider>
                 <AppProvider>
-                  {/* <MainLayout hasToken={!!cookie}>{children}</MainLayout> */}
-                  {children}
+                  <ConfigProviders>
+                    {/* <MainLayout hasToken={!!cookie}>{children}</MainLayout> */}
+                    {children}
+                  </ConfigProviders>
                 </AppProvider>
               </ThemeContextProvider>
             </StyledComponentsRegistry>

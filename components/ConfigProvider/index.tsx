@@ -1,3 +1,4 @@
+"use client";
 import { ConfigProvider, ThemeConfig } from "antd";
 import { FC, ReactNode } from "react";
 import { useOverride } from "./override";

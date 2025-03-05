@@ -1,6 +1,6 @@
+import { useTheme } from "@/app/theme";
 import { OverrideToken } from "antd/es/theme/interface";
 import { useMemo } from "react";
-import { useTheme } from "src/theme";
 
 export const useOverride = () => {
   const {
@@ -226,8 +226,8 @@ export const useOverride = () => {
         colorBgContainer: colors.table.bg.rowWhite,
         colorText: colors.table.text.cellTXT,
         colorTextHeading: colors.table.text.headerTXT,
-        headerBg: colors.psp.tableHeader,
-        headerSplitColor: colors.psp.tableHeader,
+        headerBg: "",
+        headerSplitColor: "",
         headerColor: colors.text.primaryText,
         cellPaddingInlineMD: 14.5,
         cellPaddingInlineSM: 14.5,

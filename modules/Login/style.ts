@@ -11,11 +11,10 @@ export const LoginContainer = styled(Row)`
   background-size: cover;
   width: 100vw;
   height: 100vh;
-  position: absolute;
-  @media only screen and (max-width: ${breakPointsSm}px) {
-    background-position: left bottom;
-  }
-
+  position: relative;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
   .loginFormContainer {
     padding: var(--Spacing-Vertical-32_32_32, 32px)
       var(--Spacing-Horizontal-24_24_24, 24px);
@@ -23,11 +22,15 @@ export const LoginContainer = styled(Row)`
     border-radius: var(--Radius-16-16-20, 16px);
     background: ${(props) => props.theme.colors.background.baseBg};
     box-shadow: 2px 6px 16px 0px rgba(0, 0, 0, 0.18);
-    position: relative;
-    left: 213px;
-    top: 237.5px;
-    bottom: 237.5px;
-    height: 200px;
+    margin-left: 213px;
+    height: 549px;
+  }
+  @media only screen and (max-width: ${breakPointsSm}px) {
+    background-position: left bottom;
+    justify-content: center;
+    .loginFormContainer {
+      position: initial;
+    }
   }
   .rectangleHolder {
     height: 2.2px;
