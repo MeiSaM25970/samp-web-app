@@ -3,8 +3,8 @@
 import { FC, PropsWithChildren } from "react";
 import styled from "styled-components";
 
-// interface IProps extends React.HTMLAttributes<HTMLDivElement> {}
-export const DgTitle: FC<PropsWithChildren> = (props) => {
+interface IProps extends React.HTMLAttributes<HTMLDivElement> {}
+export const DgTitle: FC<IProps & PropsWithChildren> = (props) => {
   return <Container {...props} />;
 };
 

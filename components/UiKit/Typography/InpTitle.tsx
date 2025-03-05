@@ -3,8 +3,8 @@ import { breakPointsLg } from "@/constants/screen";
 import { FC, PropsWithChildren } from "react";
 import styled from "styled-components";
 
-// interface IProps extends React.HTMLAttributes<HTMLDivElement> {}
-export const InpTitle: FC<PropsWithChildren> = (props) => {
+interface IProps extends React.HTMLAttributes<HTMLDivElement> {}
+export const InpTitle: FC<IProps & PropsWithChildren> = (props) => {
   return <Container {...props} />;
 };
 

@@ -1,4 +1,5 @@
 import "./globals.css";
+import "./styles/global.style.css";
 import { ThemeContextProvider } from "./theme";
 import { BodyWrapper } from "./styles";
 import Script from "next/script";

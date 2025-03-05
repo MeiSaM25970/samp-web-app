@@ -7,7 +7,7 @@ import fa_IR from "antd/locale/fa_IR";
 import en_US from "antd/locale/en_US";
 import { useTheme } from "@/app/theme";
 import { useLanguage } from "@/store/languages";
-import { GlobalStyle } from "@/styles/global.style";
+import { GlobalStyle } from "@/app/styles/global.style";
 
 interface IProps {
   children: ReactNode;

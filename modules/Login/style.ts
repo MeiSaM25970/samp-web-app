@@ -20,8 +20,12 @@ export const LoginContainer = styled(Row)`
       var(--Spacing-Horizontal-24_24_24, 24px);
     gap: 24px;
     border-radius: var(--Radius-16-16-20, 16px);
-    background: var(--Background-Login-BG, #f5f5f5);
-    /* 3 */
+    background: ${(props) => props.theme.colors.background.baseBg};
     box-shadow: 2px 6px 16px 0px rgba(0, 0, 0, 0.18);
+  }
+  .rectangleHolder {
+    height: 2.2px;
+    width: 100%;
+    background: ${(props) => props.theme.colors.icon.icDef2};
   }
 `;
