@@ -1,8 +1,8 @@
 import { FC } from "react";
 import { DatePicker as AntdDatePicker, DatePickerProps } from "antd";
-import { useTheme } from "src/theme";
 import Icons from "espil-icons";
 import { ClearIcon } from "../ClearIcon";
+import { useTheme } from "@/app/theme";
 
 export const DatePickerUikit: FC<DatePickerProps> = (props) => {
   const {

@@ -1,7 +1,7 @@
 import { TimePicker as AntTimePicker, DatePickerProps } from "antd";
 import { FC } from "react";
 import Icons from "espil-icons";
-import { useTheme } from "src/theme";
+import { useTheme } from "@/app/theme";
 import { ClearIcon } from "../ClearIcon";
 
 export const TimePickerUikit: FC<DatePickerProps> = (props) => {

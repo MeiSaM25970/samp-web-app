@@ -1,6 +1,6 @@
+import { useTheme } from "@/app/theme";
 import Icons from "espil-icons";
 import { FC } from "react";
-import { useTheme } from "src/theme";
 
 export const ClearIcon: FC = () => {
   const {

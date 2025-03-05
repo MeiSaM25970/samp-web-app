@@ -1,5 +1,3 @@
-import "./globals.css";
-import "./styles/global.style.css";
 import { ThemeContextProvider } from "./theme";
 import { BodyWrapper } from "./styles";
 import Script from "next/script";
@@ -7,7 +5,7 @@ import { AntdRegistry } from "@ant-design/nextjs-registry";
 import { App } from "antd";
 import StyledComponentsRegistry from "@/lib/registry";
 import { AppProvider } from "@/context/AppContext";
-
+import "./styles/global.style.css";
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -23,7 +21,7 @@ export default function RootLayout({
     //     </body>
     //   </html>
     // </ThemeContextProvider>
-    <html dir="rtl" lang="fa" className="overflow-x-hidden">
+    <html lang="fa" className="overflow-x-hidden">
       <head>
         <link
           rel="apple-touch-icon"

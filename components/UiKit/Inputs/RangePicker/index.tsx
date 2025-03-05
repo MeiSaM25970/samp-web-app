@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { DatePicker } from "antd";
-import { useTheme } from "src/theme";
+import { useTheme } from "@/app/theme";
 import Icons from "espil-icons";
 import { RangePickerProps } from "antd/es/date-picker";
 import { ClearIcon } from "../ClearIcon";
