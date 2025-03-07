@@ -3,6 +3,8 @@ import { FC } from "react";
 import Icons from "espil-icons";
 import { useTheme } from "@/app/theme";
 import { ClearIcon } from "../ClearIcon";
+import styled from "styled-components";
+import Password from "antd/es/input/Password";
 
 export const PasswordUikit: FC<InputProps> = (props) => {
   const { Password } = Input;
@@ -16,7 +18,7 @@ export const PasswordUikit: FC<InputProps> = (props) => {
   const unVisibleIcon = <Icons name="ViewOutline" color={colors.icon.icDef2} />;
 
   return (
-    <Password
+    <PasswordUikitContainer
       {...props}
       allowClear={{ clearIcon: <ClearIcon /> }}
       iconRender={(visible) => {
@@ -29,3 +31,12 @@ export const PasswordUikit: FC<InputProps> = (props) => {
     />
   );
 };
+
+const PasswordUikitContainer = styled(Password)`
+  height: 49px;
+  .ant-input-password-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+`;

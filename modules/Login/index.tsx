@@ -1,51 +1,92 @@
 "use client";
 import { FC } from "react";
 import { LoginContainer } from "./style";
-import { Col, Flex, Form } from "antd";
+import { Button, Col, Divider, Flex, Form, Row } from "antd";
 import Image from "next/image";
 import { S3 } from "@/components/UiKit/Typography";
 import { FormItem } from "@/components/UiKit/FormItem";
-import { InputUikit, PasswordUikit } from "@/components/UiKit/Inputs";
+import { PasswordUikit } from "@/components/UiKit/Inputs";
 import { useForm } from "antd/es/form/Form";
 import { UserNameUikit } from "@/components/UiKit/Inputs/UserName";
+import { useTheme } from "@/app/theme";
+import { keepPreviousData, useMutation, useQuery } from "@tanstack/react-query";
+import { BaseInfoKeys } from "@/services/BaseInfo/queryKey";
+import { BaseInfoService } from "@/services/BaseInfo/BaseInfo.service";
+import { useLogin } from "@/hooks/auth";
 
 export const Login: FC = () => {
   const [form] = useForm();
+  const {
+    theme: { colors },
+  } = useTheme();
+  const { loginHandler } = useLogin();
+
+  const { data, isFetching, refetch } = useQuery({
+    queryKey: [BaseInfoKeys.Login],
+    queryFn: async () => {
+      return await BaseInfoService.prototype.Login();
+    },
+    placeholderData: keepPreviousData,
+  });
+
   return (
-    <Form form={form}>
+    <Form form={form} onFinish={refetch}>
       <LoginContainer>
-        <Col md={6} xs={22} lg={5} className="loginFormContainer">
-          <Flex justify="center" align="center" vertical>
-            <Image
-              src="/images/loginFormLogo.svg"
-              alt="loginFormLogo"
-              width={140}
-              height={65}
-            />
-            <div className="!w-full">
-              <Flex justify="center" align="center" gap={4}>
-                <div className="rectangleHolder"></div>
-                <S3 className="whitespace-nowrap">سامانه مدیریت پروژه‌ها</S3>
-                <div className="rectangleHolder"></div>
+        <Col md={10} xs={22} lg={5} className="loginFormContainer">
+          <Row gutter={[0, 24]}>
+            <Col span={24}>
+              <Flex justify="center" align="center" vertical>
+                <Image
+                  src="/images/loginFormLogo.svg"
+                  alt="loginFormLogo"
+                  width={140}
+                  height={65}
+                />
+                <div className="!w-full">
+                  <Flex justify="center" align="center" gap={4}>
+                    <div className="rectangleHolder"></div>
+                    <S3 className="whitespace-nowrap">
+                      سامانه مدیریت پروژه‌ها
+                    </S3>
+                    <div className="rectangleHolder"></div>
+                  </Flex>
+                </div>
               </Flex>
-            </div>
-          </Flex>
-          <Flex vertical>
-            <FormItem
-              name={"userName"}
-              label="نام کاربری"
-              rules={[{ required: true }]}
-            >
-              <UserNameUikit />
-            </FormItem>
-            <FormItem
-              name={"userName"}
-              label="رمز عبور"
-              rules={[{ required: true }]}
-            >
-              <PasswordUikit />
-            </FormItem>
-          </Flex>
+            </Col>
+            <Col span={24}>
+              <Flex vertical gap={16}>
+                <FormItem
+                  name={"userName"}
+                  label="نام کاربری"
+                  rules={[{ required: true }]}
+                >
+                  <UserNameUikit />
+                </FormItem>
+                <FormItem
+                  name={"password"}
+                  label="رمز عبور"
+                  rules={[{ required: true }]}
+                >
+                  <PasswordUikit />
+                </FormItem>
+              </Flex>
+            </Col>
+            <Col span={24}>
+              <Flex gap={32} vertical>
+                <Divider
+                  dashed
+                  style={{ color: colors.border.borInput, margin: 0 }}
+                />
+                <Button
+                  type="primary"
+                  onClick={form.submit}
+                  loading={isFetching}
+                >
+                  ورود
+                </Button>
+              </Flex>
+            </Col>
+          </Row>
         </Col>
       </LoginContainer>
     </Form>

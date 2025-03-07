@@ -10,13 +10,14 @@ export const UserNameUikit: FC<InputProps> = (props) => {
     theme: { colors },
   } = useTheme();
 
-  const visibleIcon = <Icons name="User" color={colors.icon.icDef2} />;
+  const userIcon = <Icons name="User" color={colors.icon.icDef2} />;
 
   return (
     <AntdInput
       {...props}
       allowClear={{ clearIcon: <ClearIcon /> }}
-      prefix={visibleIcon}
+      suffix={userIcon}
+      style={{ height: "49px" }}
     />
   );
 };
