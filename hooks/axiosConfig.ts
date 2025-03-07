@@ -1,19 +1,15 @@
-"use client";
 import { redirect } from "next/navigation";
 import axios from "axios";
-import authStore from "@/store/auth";
-import { USER_JWT_TOKEN } from "@/constants/localStorage";
 import { ROUTES } from "@/constants/Routes";
-import { OtpUrls } from "@/services/Otp/urls";
 import { responseHandler } from "@/services/responseHandler";
+import { cookies } from "next/headers";
+import { cookieKey } from "@/constants/cookieKey";
 
 export const axiosConfiguration = () => {
-  axios.defaults.baseURL = process.env.NEXT_PUBLIC_API_URL;
-  const { logout } = authStore();
+  const cookie = cookies();
   const logoutHandler = async () => {
-    localStorage.removeItem(USER_JWT_TOKEN);
-    logout();
-    redirect(ROUTES.home);
+    await cookie.delete(cookieKey.token);
+    redirect(ROUTES.login);
   };
   axios.interceptors.response.use(
     (response) => {
@@ -28,10 +24,7 @@ export const axiosConfiguration = () => {
       if (error?.response?.status === 401) {
         logoutHandler();
       }
-      if (
-        error?.response?.status === 404 &&
-        error.config.url === OtpUrls.verifyOtp
-      ) {
+      if (error?.response?.status === 404) {
         return Promise.reject(error);
       }
       responseHandler(error);
@@ -42,11 +35,6 @@ export const axiosConfiguration = () => {
 
   axios.interceptors.request.use(
     (config) => {
-      const accessToken = localStorage.getItem(USER_JWT_TOKEN);
-      if (accessToken && !config.url?.includes("auth")) {
-        config.headers.Authorization = `Bearer ${accessToken}`;
-      }
-
       return config;
     },
     (error) => {

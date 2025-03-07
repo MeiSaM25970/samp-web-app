@@ -1,34 +1,13 @@
 "use client";
-import {
-  createContext,
-  FC,
-  PropsWithChildren,
-  useContext,
-  useLayoutEffect,
-} from "react";
+import { createContext, FC, PropsWithChildren, useContext } from "react";
 import { JalaliLocaleListener } from "antd-jalali";
-import { axiosConfiguration } from "@/hooks/axiosConfig";
-import authStore from "@/store/auth";
-import { useUserInfo } from "@/hooks/useUserInfo";
-import { USER_JWT_TOKEN } from "@/constants/localStorage";
-
+interface IProps extends PropsWithChildren {}
 interface IContext {}
-const defaultValues: IContext = {};
-export const AppContext = createContext<IContext>(defaultValues);
+export const AppContext = createContext<IContext | undefined>(undefined);
 
-export const AppProvider: FC<PropsWithChildren> = ({ children }) => {
-  axiosConfiguration();
-  const { fetchUserInfo } = useUserInfo();
-  const { login } = authStore();
+export const AppProvider: FC<IProps> = ({ children }) => {
   const contextValue: IContext = {};
-  useLayoutEffect(() => {
-    const userToken = localStorage.getItem(USER_JWT_TOKEN);
-    if (userToken) {
-      fetchUserInfo().then(() => {
-        login(userToken);
-      });
-    }
-  }, []);
+
   return (
     <AppContext.Provider value={contextValue}>
       <JalaliLocaleListener />
@@ -37,4 +16,8 @@ export const AppProvider: FC<PropsWithChildren> = ({ children }) => {
   );
 };
 
-export const useAppContext = () => useContext(AppContext);
+export const useAppContext = () => {
+  const data = useContext(AppContext);
+  if (data) return data;
+  else throw console.error("App provider not found ");
+};

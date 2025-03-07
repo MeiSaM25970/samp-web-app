@@ -9,28 +9,32 @@ import { PasswordUikit } from "@/components/UiKit/Inputs";
 import { useForm } from "antd/es/form/Form";
 import { UserNameUikit } from "@/components/UiKit/Inputs/UserName";
 import { useTheme } from "@/app/theme";
-import { keepPreviousData, useMutation, useQuery } from "@tanstack/react-query";
-import { BaseInfoKeys } from "@/services/BaseInfo/queryKey";
-import { BaseInfoService } from "@/services/BaseInfo/BaseInfo.service";
-import { useLogin } from "@/hooks/auth";
+import { useMutation } from "@tanstack/react-query";
+import { IUserInfo } from "@/services/BaseInfo/models";
+import { useRouter } from "next/navigation";
+import { loginAction } from "@/app/actions/login";
+import { fireError } from "@/helper/fireError";
 
 export const Login: FC = () => {
   const [form] = useForm();
   const {
     theme: { colors },
   } = useTheme();
-  const { loginHandler } = useLogin();
-
-  const { data, isFetching, refetch } = useQuery({
-    queryKey: [BaseInfoKeys.Login],
-    queryFn: async () => {
-      return await BaseInfoService.prototype.Login();
+  const router = useRouter();
+  const { mutate, isPending } = useMutation({
+    mutationFn: async (values: IUserInfo) => {
+      const { token, error } = await loginAction(values);
+      if (error) return fireError("خطا", error);
+      if (token) {
+        router.replace("/dashboard");
+        return;
+      }
+      return token;
     },
-    placeholderData: keepPreviousData,
   });
 
   return (
-    <Form form={form} onFinish={refetch}>
+    <Form form={form} onFinish={mutate}>
       <LoginContainer>
         <Col md={10} xs={22} lg={5} className="loginFormContainer">
           <Row gutter={[0, 24]}>
@@ -56,7 +60,7 @@ export const Login: FC = () => {
             <Col span={24}>
               <Flex vertical gap={16}>
                 <FormItem
-                  name={"userName"}
+                  name={"username"}
                   label="نام کاربری"
                   rules={[{ required: true }]}
                 >
@@ -80,7 +84,7 @@ export const Login: FC = () => {
                 <Button
                   type="primary"
                   onClick={form.submit}
-                  loading={isFetching}
+                  loading={isPending}
                 >
                   ورود
                 </Button>

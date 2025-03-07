@@ -7,25 +7,18 @@ import StyledComponentsRegistry from "@/lib/registry";
 import { AppProvider } from "@/context/AppContext";
 import "./styles/global.style.css";
 import ConfigProviders from "@/components/ConfigProvider";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { axiosConfiguration } from "@/hooks/axiosConfig";
+import { ReactQueryClient } from "@/context/ReactQuery";
+import MainLayout from "@/layout/MainLayout";
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const queryClient = new QueryClient();
+  axiosConfiguration();
 
   return (
-    // <ThemeContextProvider>
-    //   <html lang="en">
-    //     <body
-    //       className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-    //     >
-    //       {children}
-    //     </body>
-    //   </html>
-    // </ThemeContextProvider>
     <html lang="fa" className="overflow-x-hidden">
       <head>
         <link
@@ -53,16 +46,15 @@ export default function RootLayout({
         <AntdRegistry>
           <App>
             <StyledComponentsRegistry>
-              <QueryClientProvider client={queryClient}>
+              <ReactQueryClient>
                 <ThemeContextProvider>
                   <AppProvider>
                     <ConfigProviders>
-                      {/* <MainLayout hasToken={!!cookie}>{children}</MainLayout> */}
-                      {children}
+                      <MainLayout>{children}</MainLayout>
                     </ConfigProviders>
                   </AppProvider>
                 </ThemeContextProvider>
-              </QueryClientProvider>
+              </ReactQueryClient>
             </StyledComponentsRegistry>
           </App>
         </AntdRegistry>

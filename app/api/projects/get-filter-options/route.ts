@@ -132,24 +132,35 @@ export async function GET() {
     }
     const data = {
       planGroups:
-        planGroups?.map((i) => ({
-          label: i.PlanGroup_Name,
-          value: i.PlanGroup_ID,
-        })) || [],
+        planGroups
+          ?.map((i) => ({
+            label: i.PlanGroup_Name,
+            value: Number(i.PlanGroup_ID),
+          }))
+          .filter((i) => i.value !== 0) || [],
       areaType:
-        areaType?.map((i) => ({ label: i.Pat_Name, value: i.Pat_ID })) || [],
+        areaType
+          ?.map((i) => ({ label: i.Pat_Name, value: Number(i.Pat_ID) }))
+          .filter((i) => i.value !== 0) || [],
       subjectType:
-        subjectType?.map((i) => ({ label: i.Pst_Name, value: i.Pst_ID })) || [],
+        subjectType
+          ?.map((i) => ({ label: i.Pst_Name, value: Number(i.Pst_ID) }))
+          .filter((i) => i.value !== 0) || [],
       technicalType:
-        technicalType?.map((i) => ({ label: i.Ptt_Name, value: i.Ptt_ID })) ||
-        [],
+        technicalType
+          ?.map((i) => ({ label: i.Ptt_Name, value: Number(i.Ptt_ID) }))
+          .filter((i) => i.value !== 0) || [],
       province:
-        province?.map((i) => ({
-          label: i.province_Name,
-          value: i.province_ID,
-        })) || [],
+        province
+          ?.map((i) => ({
+            label: i.province_Name,
+            value: Number(i.province_ID),
+          }))
+          .filter((i) => i.value !== 0) || [],
       executeState:
-        executeState?.map((i) => ({ label: i.Ps_Name, value: i.Ps_ID })) || [],
+        executeState
+          ?.map((i) => ({ label: i.Ps_Name, value: Number(i.Ps_ID) }))
+          .filter((i) => i.value !== 0) || [],
     };
     return NextResponse.json({ success: true, data }, { status: 200 });
   } catch (error) {
