@@ -1,6 +1,7 @@
 export enum ROUTES {
   home = "/",
   auth = "/auth",
+  login = "login",
   businessOpportunities = "/business-opportunities",
   consult = "/consult",
   foreignCustomers = "/foreign-customers",

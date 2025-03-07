@@ -6,11 +6,16 @@ import { App } from "antd";
 import StyledComponentsRegistry from "@/lib/registry";
 import { AppProvider } from "@/context/AppContext";
 import "./styles/global.style.css";
+import ConfigProviders from "@/components/ConfigProvider";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const queryClient = new QueryClient();
+
   return (
     // <ThemeContextProvider>
     //   <html lang="en">
@@ -48,12 +53,16 @@ export default function RootLayout({
         <AntdRegistry>
           <App>
             <StyledComponentsRegistry>
-              <ThemeContextProvider>
-                <AppProvider>
-                  {/* <MainLayout hasToken={!!cookie}>{children}</MainLayout> */}
-                  {children}
-                </AppProvider>
-              </ThemeContextProvider>
+              <QueryClientProvider client={queryClient}>
+                <ThemeContextProvider>
+                  <AppProvider>
+                    <ConfigProviders>
+                      {/* <MainLayout hasToken={!!cookie}>{children}</MainLayout> */}
+                      {children}
+                    </ConfigProviders>
+                  </AppProvider>
+                </ThemeContextProvider>
+              </QueryClientProvider>
             </StyledComponentsRegistry>
           </App>
         </AntdRegistry>

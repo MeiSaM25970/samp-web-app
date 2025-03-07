@@ -1,13 +1,13 @@
-import { Input, InputProps } from "antd";
+import { InputProps } from "antd";
 import { FC } from "react";
 import { useTheme } from "@/app/theme";
 import { ClearIcon } from "../ClearIcon";
+import styled from "styled-components";
+import Password from "antd/es/input/Password";
 import dynamic from "next/dynamic";
 const Icons = dynamic(() => import("espil-icons"), { ssr: false });
 
 export const PasswordUikit: FC<InputProps> = (props) => {
-  const { Password } = Input;
-
   const {
     theme: { colors },
   } = useTheme();
@@ -17,7 +17,7 @@ export const PasswordUikit: FC<InputProps> = (props) => {
   const unVisibleIcon = <Icons name="ViewOutline" color={colors.icon.icDef2} />;
 
   return (
-    <Password
+    <PasswordUikitContainer
       {...props}
       allowClear={{ clearIcon: <ClearIcon /> }}
       iconRender={(visible) => {
@@ -30,3 +30,12 @@ export const PasswordUikit: FC<InputProps> = (props) => {
     />
   );
 };
+
+const PasswordUikitContainer = styled(Password)`
+  height: 49px;
+  .ant-input-password-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+`;
