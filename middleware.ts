@@ -21,7 +21,12 @@ export default async function middleware(req: NextRequest) {
 
   // 4. Redirect to /login if the user is not authenticated
   if (isProtectedRoute && !session?.id) {
-    return NextResponse.redirect(new URL("/login", req.nextUrl));
+    const response = NextResponse.redirect(new URL("/login", req.nextUrl));
+    response.cookies.set(cookieKey.token, "", {
+      path: "/", // مسیر کوکی (مهم)
+      maxAge: 0, // زمان انقضا صفر برای حذف کوکی
+    });
+    return response;
   }
 
   // 5. Redirect to /dashboard if the user is authenticated
@@ -31,6 +36,14 @@ export default async function middleware(req: NextRequest) {
     !req.nextUrl.pathname.startsWith("/dashboard")
   ) {
     return NextResponse.redirect(new URL("/dashboard", req.nextUrl));
+  }
+  if (isPublicRoute && !session) {
+    const response = NextResponse.next();
+    response.cookies.set(cookieKey.token, "", {
+      path: "/", // مسیر کوکی (مهم)
+      maxAge: 0, // زمان انقضا صفر برای حذف کوکی
+    });
+    return response;
   }
 
   return NextResponse.next();

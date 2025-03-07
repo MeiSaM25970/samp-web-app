@@ -1,6 +1,7 @@
 import { useTheme } from "@/app/theme";
-import Icons from "espil-icons";
+import dynamic from "next/dynamic";
 import { FC } from "react";
+const Icons = dynamic(() => import("espil-icons"), { ssr: false });
 
 export const ClearIcon: FC = () => {
   const {
