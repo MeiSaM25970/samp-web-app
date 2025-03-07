@@ -1,3 +1,3 @@
 export enum BaseInfoUrls {
-  Login = "api/Login",
+  Login = "/api/login",
 }

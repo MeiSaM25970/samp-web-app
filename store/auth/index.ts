@@ -1,5 +1,5 @@
 "use client";
-import { IUserInfo } from "@/services/Customer/models/result.model";
+import { IUserInfo } from "@/services/BaseInfo/models";
 import { create } from "zustand";
 
 interface IStore {

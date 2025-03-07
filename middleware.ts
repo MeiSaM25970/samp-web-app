@@ -1,12 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
-import { cookies } from "next/headers";
 import { ITokenData } from "./models/backend";
 import { cookieKey } from "./constants/cookieKey";
 import { verifyJWT } from "./lib/token";
 
 // 1. Specify protected and public routes
-const protectedRoutes = ["/", "/dashboard"];
-const publicRoutes = ["/login", "/api-doc"];
+export const protectedRoutes = ["/", "/dashboard"];
+export const publicRoutes = ["/login", "/api-doc"];
 
 export default async function middleware(req: NextRequest) {
   // 2. Check if the current route is protected or public
@@ -14,8 +13,9 @@ export default async function middleware(req: NextRequest) {
   const isProtectedRoute = protectedRoutes.includes(path);
   const isPublicRoute = publicRoutes.includes(path);
 
+  const token = req.cookies.get(cookieKey.token)?.value;
+
   // 3. Decrypt the session from the cookie
-  const token = (await cookies()).get(cookieKey.token)?.value;
   let session: ITokenData | undefined;
   if (token) session = await verifyJWT(token);
 
@@ -30,11 +30,7 @@ export default async function middleware(req: NextRequest) {
   }
 
   // 5. Redirect to /dashboard if the user is authenticated
-  if (
-    isPublicRoute &&
-    session?.id &&
-    !req.nextUrl.pathname.startsWith("/dashboard")
-  ) {
+  if (isPublicRoute && session?.id) {
     return NextResponse.redirect(new URL("/dashboard", req.nextUrl));
   }
   if (isPublicRoute && !session) {
@@ -45,7 +41,9 @@ export default async function middleware(req: NextRequest) {
     });
     return response;
   }
-
+  if (path === "/") {
+    return NextResponse.redirect(new URL("/dashboard", req.nextUrl));
+  }
   return NextResponse.next();
 }
 

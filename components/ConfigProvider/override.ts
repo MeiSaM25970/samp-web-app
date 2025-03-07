@@ -258,6 +258,15 @@ export const useOverride = () => {
         colorBgElevated: colors.dropdownList.baseBG,
         controlItemBgHover: colors.background.hoverBg,
       },
+      Collapse: {
+        colorTextHeading: colors.sidebar.text.tSb1,
+        fontSizeHeading1: 16,
+        borderRadiusLG: 4,
+        headerPadding: "8px 12px",
+        headerBg: "transparent",
+        colorBorder: "transparent",
+        lineWidth: 0,
+      },
     };
   }, [colors]);
 

@@ -3,7 +3,7 @@ import { BaseInfoUrls } from "./urls";
 import { ILoginResult, IUserInfo } from "./models";
 
 export class BaseInfoService {
-  async Login(data?: IUserInfo) {
+  async Login(data: IUserInfo) {
     try {
       const response = await axios.post<ILoginResult>(BaseInfoUrls.Login, data);
       return response;
