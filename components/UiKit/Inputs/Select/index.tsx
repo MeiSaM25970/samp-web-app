@@ -3,10 +3,11 @@ import type { GetProps, RefSelectProps } from "antd";
 import { forwardRef } from "react";
 import { Select as AntSelect } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
-import Icons from "espil-icons";
 import { useTheme } from "@/app/theme";
 import { ClearIcon } from "../ClearIcon";
 import styled from "styled-components";
+import dynamic from "next/dynamic";
+const Icons = dynamic(() => import("espil-icons"), { ssr: false });
 
 type IProps = GetProps<SelectProps>;
 

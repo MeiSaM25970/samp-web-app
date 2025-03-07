@@ -1,7 +1,5 @@
-import { cookieKey } from "@/constants/cookieKey";
 import { ITokenData } from "@/models/backend";
-import { SignJWT, jwtVerify, decodeProtectedHeader } from "jose";
-import { cookies } from "next/headers";
+import { SignJWT, jwtVerify } from "jose";
 
 const secretKey = process.env.JWT_SECRET || "jwt_secret_key";
 const secret = new TextEncoder().encode(secretKey);
