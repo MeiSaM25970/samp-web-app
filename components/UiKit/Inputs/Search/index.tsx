@@ -1,8 +1,9 @@
 import { Input as AntdInput, InputProps } from "antd";
 import { FC } from "react";
-import Icons from "espil-icons";
 import { useTheme } from "@/app/theme";
 import { ClearIcon } from "../ClearIcon";
+import dynamic from "next/dynamic";
+const Icons = dynamic(() => import("espil-icons"), { ssr: false });
 
 export const SearchInputUikit: FC<InputProps> = (props) => {
   const {

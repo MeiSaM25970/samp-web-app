@@ -4,9 +4,10 @@ import { forwardRef } from "react";
 import { TreeSelect as AntTreeSelect } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 import { useTheme } from "@/app/theme";
-import Icons from "espil-icons";
 import { ClearIcon } from "../ClearIcon";
 import styled from "styled-components";
+import dynamic from "next/dynamic";
+const Icons = dynamic(() => import("espil-icons"), { ssr: false });
 
 export const TreeSelectUiKit = forwardRef<RefSelectProps, TreeSelectProps>(
   (props, ref) => {
@@ -52,7 +53,7 @@ export const TreeSelectUiKit = forwardRef<RefSelectProps, TreeSelectProps>(
     );
   }
 );
-
+TreeSelectUiKit.displayName = "TreeSelect";
 export const AntTreeSelectStyle = styled(AntTreeSelect)`
   .ant-select-clear {
     width: 20px;
