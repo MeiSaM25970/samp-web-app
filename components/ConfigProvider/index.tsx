@@ -5,7 +5,6 @@ import { useOverride } from "./override";
 import { useResponsive } from "antd-style";
 import { ThemeProvider } from "styled-components";
 import fa_IR from "antd/locale/fa_IR";
-import en_US from "antd/locale/en_US";
 import { useTheme } from "@/app/theme";
 import { GlobalStyle } from "@/app/styles/global.style";
 

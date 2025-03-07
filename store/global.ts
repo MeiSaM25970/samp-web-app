@@ -1,5 +1,6 @@
+"use client";
+import { IUserInfo } from "@/services/BaseInfo/models";
 import { ReactNode } from "react";
-import { IUserInfo } from "src/services/identity/models";
 import { create } from "zustand";
 
 interface IAlert {

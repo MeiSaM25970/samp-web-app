@@ -1,5 +1,6 @@
 @import "tailwindcss";
-
+@import "./fonts-en.css";
+@import "./fonts-fa.css";
 :root {
   --breakPointsXs: 425px;
   --breakPointsSm: 768px;

@@ -3,8 +3,7 @@ import { createGlobalStyle } from "styled-components";
 export const GlobalStyle = createGlobalStyle`
 
  * :not(.material-icons , .material-symbols-outlined){
-  font-family:  ${(props) =>
-    props.theme.isRtl ? "IRANSansXFaNum" : "Roboto"} !important;
+  font-family: "IRANSansXFaNum" 
 }
 body{
   margin: unset !important;
@@ -269,6 +268,37 @@ body{
     }
   }
   /*End Table */
+
+  /* Collapse */
+  .ant-collapse-header-text{
+font-size: 16px;
+font-style: normal;
+font-weight: 500;
+
+  }
+  .ant-collapse-content{
+    .ant-checkbox-label{
+font-size: var(--Spacing-Horizontal-12_12_12, 12px);
+font-style: normal;
+font-weight: 300;
+
+}
+  }
+  
+  .ant-collapse-item-active{
+    .ant-collapse-header{
+      background: ${({ theme }) => theme.colors.sidebar.bg.sbSelectBg1} ;
+      border-radius: 4px 4px 0px 0px;
+
+    }
+    .ant-collapse-header-text{
+      color: ${({ theme }) => theme.colors.text.priText};
+    }
+    .ant-collapse-content-box{
+      border-radius: 0px 0px 4px 4px;
+background: ${({ theme }) => theme.colors.sidebar.bg.sbBg} ;
+    }
+  }
 
 /* ------------------- Override Css --------------------- */
 ::-webkit-scrollbar {

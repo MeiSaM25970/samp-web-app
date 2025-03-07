@@ -1,7 +1,7 @@
 export interface IUserInfo {
-  userName: string;
+  username: string;
   password: string;
 }
 export interface ILoginResult {
-  accessToken: string;
+  token: string;
 }

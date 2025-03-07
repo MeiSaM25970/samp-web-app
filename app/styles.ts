@@ -7,10 +7,6 @@ export const BodyWrapper = styled.body`
   margin: 0;
   min-height: 100dvh;
 
-  * {
-    font-family: "Anjoman" !important;
-  }
-
   .ant-table-wrapper
     .ant-table-ping-right:not(.ant-table-has-fix-right)
     .ant-table-container::after {
