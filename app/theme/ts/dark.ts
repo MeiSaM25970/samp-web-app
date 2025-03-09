@@ -364,6 +364,10 @@ const colors = {
     dis2: base.secondary[400],
     dis3: base.secondary[500],
   },
+  project: {
+    priceBG: base.secondary[600],
+    disableP: base.secondary[400],
+  },
 };
 
 export const darkColors = {
