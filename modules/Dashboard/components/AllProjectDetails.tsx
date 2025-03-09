@@ -77,7 +77,11 @@ export const AllProjectsDetails: FC = () => {
             <Col {...item.colProps} key={index}>
               <ProjectText
                 label={item.label}
-                value={Number(item.value)?.toLocaleString("fa-IR")}
+                value={
+                  Number(item.value)
+                    ? Number(item.value).toLocaleString("fa-IR")
+                    : "--"
+                }
                 hasPrefix={item.hasPrefix}
               />
             </Col>
@@ -88,7 +92,11 @@ export const AllProjectsDetails: FC = () => {
             <Col {...item.colProps} key={index}>
               <ProjectText
                 label={item.label}
-                value={Number(item.value)?.toLocaleString("fa-IR")}
+                value={
+                  Number(item.value)
+                    ? Number(item.value).toLocaleString("fa-IR")
+                    : "--"
+                }
                 hasPrefix={item.hasPrefix}
               />
             </Col>

@@ -10,4 +10,5 @@ export const CardContainer = styled(Flex)`
   background: ${({ theme }) => theme.colors.background.baseBg};
   /* 3 */
   box-shadow: 2px 6px 16px 0px rgba(0, 0, 0, 0.18);
+  height: 288px;
 `;

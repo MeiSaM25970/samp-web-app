@@ -46,6 +46,10 @@
  *                   type: string
  *                   description: The execution state.
  *                   example: "1,2"
+ *                 supervisor:
+ *                   type: string
+ *                   description: The supervisor state.
+ *                   example: "1,2"
  *       responses:
  *         200:
  *           description: Project data retrieved successfully.
@@ -110,6 +114,7 @@ export async function POST(req: Request) {
       technicalType,
       province,
       executeState,
+      supervisor,
     } = await req.json();
     const db = await connectDB();
     const result = await db
@@ -122,6 +127,7 @@ export async function POST(req: Request) {
       .input("Prj_TechnicalType", sql.NVarChar, technicalType || "")
       .input("Prj_Province", sql.NVarChar, province || "")
       .input("Prj_ExecuteState", sql.NVarChar, executeState || "")
+      .input("Prj_Supervisor", sql.NVarChar, supervisor || "")
       .execute("PMO_ProjectList");
     if (!result || !result?.recordset.length) {
       return NextResponse.json(

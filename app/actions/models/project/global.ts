@@ -5,4 +5,5 @@ export interface IGetProjectArg {
   technicalType?: string;
   province?: string;
   executeState?: string;
+  supervisor?: string;
 }

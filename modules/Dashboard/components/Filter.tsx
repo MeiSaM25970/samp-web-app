@@ -7,6 +7,7 @@ import { T6 } from "@/components/UiKit/Typography";
 import { IFilterOptions } from "@/app/actions/models";
 import { useTheme } from "@/app/theme";
 import { useDashboard } from "../context";
+import _ from "lodash";
 interface IProps {
   options: IFilterOptions | undefined;
 }
@@ -16,8 +17,11 @@ export const Filter: FC<IProps> = ({ options }) => {
   } = useTheme();
   const { setFilter } = useDashboard();
 
-  const onChange = (type: string, value: number[]) => {
-    setFilter((prev) => ({ ...prev, [type]: value.join(",") }));
+  const onChange = (type: string, value: number[] | string) => {
+    setFilter((prev) => ({
+      ...prev,
+      [type]: _.isArray(value) ? value.join(",") : value,
+    }));
   };
   const items: CollapseProps["items"] = [
     {
@@ -83,6 +87,17 @@ export const Filter: FC<IProps> = ({ options }) => {
           options={options?.province}
           className="checkBoxGroup"
           onChange={(value) => onChange("province", value)}
+        />
+      ),
+    },
+    {
+      key: "7",
+      label: "مهندس ناظر",
+      children: (
+        <Checkbox.Group
+          options={options?.supervisor}
+          className="checkBoxGroup"
+          onChange={(value) => onChange("supervisor", value)}
         />
       ),
     },

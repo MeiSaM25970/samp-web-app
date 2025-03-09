@@ -17,7 +17,9 @@ export const ProjectText: FC<{
   return (
     <Flex gap={12}>
       <C2 style={{ color: colors.text.thirdText }}>{label}</C2>
-      <C2>{loading ? <Spin size="small" className="mx-[24px]" /> : value} </C2>
+      <C2>
+        {loading ? <Spin size="small" className="mx-[24px]" /> : value || "--"}
+      </C2>
       {hasPrefix && <C7 style={{ color: colors.text.secondaryText }}>ریال</C7>}
     </Flex>
   );
