@@ -364,6 +364,10 @@ const colors = {
     dis2: base.gray[400],
     dis3: base.gray[200],
   },
+  project: {
+    priceBG: base.gray[200],
+    disableP: base.gray[400],
+  },
 };
 
 export const lightColors = { base, ...colors };
