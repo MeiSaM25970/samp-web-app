@@ -1,7 +1,12 @@
-import { ProjectMap } from "@/modules/Dashboard/components/Map";
+import { MapProvider } from "@/modules/Map/context";
+import { ProjectMap } from "@/modules/Map";
 import { FC } from "react";
 
 const MapPage: FC = () => {
-  return <ProjectMap />;
+  return (
+    <MapProvider>
+      <ProjectMap />
+    </MapProvider>
+  );
 };
 export default MapPage;

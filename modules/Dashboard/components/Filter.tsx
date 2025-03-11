@@ -1,22 +1,31 @@
 "use client";
-import { Checkbox, Collapse, CollapseProps, Divider, Flex } from "antd";
-import { FC } from "react";
+import { Checkbox, Collapse, CollapseProps, Divider, Flex, Spin } from "antd";
+import { Dispatch, FC, SetStateAction } from "react";
 import { FilterContainer } from "../styles/Filter.style";
 import Icons from "espil-icons";
-import { T6 } from "@/components/UiKit/Typography";
-import { IFilterOptions } from "@/app/actions/models";
+import { C7, T6 } from "@/components/UiKit/Typography";
 import { useTheme } from "@/app/theme";
-import { useDashboard } from "../context";
 import _ from "lodash";
+import { useQuery } from "@tanstack/react-query";
+import { queryKeys } from "@/constants/queryKeys";
+import { IGetProjectArg } from "@/app/actions/models";
+import { fetchFilterOptions } from "../getData";
+
 interface IProps {
-  options: IFilterOptions | undefined;
+  setFilter: Dispatch<SetStateAction<IGetProjectArg | undefined>>;
 }
-export const Filter: FC<IProps> = ({ options }) => {
+export const Filter: FC<IProps> = ({ setFilter }) => {
   const {
     theme: { colors },
   } = useTheme();
-  const { setFilter } = useDashboard();
 
+  const { data: options, isLoading } = useQuery({
+    queryKey: [queryKeys.options],
+    queryFn: async () => {
+      const res = await fetchFilterOptions();
+      if (res) return res;
+    },
+  });
   const onChange = (type: string, value: number[] | string) => {
     setFilter((prev) => ({
       ...prev,
@@ -109,6 +118,11 @@ export const Filter: FC<IProps> = ({ options }) => {
         <T6>فیلتر</T6>
       </Flex>
       <Divider className="!my-[16px]" />
+      {isLoading && (
+        <Spin>
+          <C7>در حال بارگذاری...</C7>
+        </Spin>
+      )}
       <Collapse
         accordion
         items={items}

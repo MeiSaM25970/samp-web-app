@@ -3,17 +3,16 @@ import { useTheme } from "@/app/theme";
 import { C2, C7 } from "@/components/UiKit/Typography";
 import { Flex, Spin } from "antd";
 import { FC, ReactNode } from "react";
-import { useDashboard } from "../context";
 
 export const ProjectText: FC<{
   label: ReactNode;
   value: ReactNode;
   hasPrefix?: boolean;
-}> = ({ label, value, hasPrefix = true }) => {
+  loading?: boolean;
+}> = ({ label, value, hasPrefix = true, loading }) => {
   const {
     theme: { colors },
   } = useTheme();
-  const { loading } = useDashboard();
   return (
     <Flex gap={12}>
       <C2 style={{ color: colors.text.thirdText }}>{label}</C2>
