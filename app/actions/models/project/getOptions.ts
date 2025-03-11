@@ -9,4 +9,5 @@ export interface IFilterOptions {
   technicalType: IOption[];
   province: IOption[];
   executeState: IOption[];
+  supervisor: IOption[];
 }

@@ -22,6 +22,9 @@ export async function getFilterOptions(): Promise<IResponse> {
       db?.request().query("SELECT * FROM Pmo__TechnicalType"),
       db?.request().query("SELECT * FROM Pmo__Province"),
       db?.request().query("SELECT * FROM Pmo__ExecuteState"),
+      db
+        ?.request()
+        .query("SELECT * FROM Users_Users WHERE User_Supervisor = 1 "),
     ]);
 
     const [
@@ -31,6 +34,7 @@ export async function getFilterOptions(): Promise<IResponse> {
       technicalType,
       province,
       executeState,
+      supervisor,
     ] = results.map((result) =>
       result.status === "fulfilled" ? result.value.recordset : null
     );
@@ -40,7 +44,8 @@ export async function getFilterOptions(): Promise<IResponse> {
       !subjectType &&
       !technicalType &&
       !province &&
-      !executeState
+      !executeState &&
+      !supervisor
     ) {
       return { success: false, error: "No data found" };
     }
@@ -85,6 +90,13 @@ export async function getFilterOptions(): Promise<IResponse> {
           ?.map((i) => ({
             label: i.Ps_Name,
             value: Number(i.Ps_ID),
+          }))
+          .filter((i) => i.value !== 0) || [],
+      supervisor:
+        supervisor
+          ?.map((i) => ({
+            label: i.User_Name,
+            value: Number(i.User_ID),
           }))
           .filter((i) => i.value !== 0) || [],
     };

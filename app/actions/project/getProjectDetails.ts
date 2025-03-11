@@ -25,6 +25,7 @@ export async function getProjectDetails(
       technicalType,
       province,
       executeState,
+      supervisor,
     } = data || {};
     const db = await connectDB();
     const result = await db
@@ -37,6 +38,7 @@ export async function getProjectDetails(
       .input("Prj_TechnicalType", sql.NVarChar, technicalType || "")
       .input("Prj_Province", sql.NVarChar, province || "")
       .input("Prj_ExecuteState", sql.NVarChar, executeState || "")
+      .input("Prj_Supervisor", sql.NVarChar, supervisor || "")
       .execute("PMO_ProjectList");
     if (!result || !result?.recordset.length) {
       return { success: false, error: "not found" };
