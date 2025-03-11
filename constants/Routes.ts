@@ -3,4 +3,5 @@ export enum ROUTES {
   login = "/login",
   dashboard = "/dashboard",
   apiDoc = "api-doc",
+  map = "/map",
 }
