@@ -8,6 +8,7 @@ import {
   C2,
   C3,
   C4,
+  C5,
   C7,
   C8,
   C9,
@@ -20,6 +21,7 @@ import { useTheme } from "@/app/theme";
 interface IProps {
   project: IProject | undefined;
 }
+
 export const ProjectCard: FC<IProps> = ({ project }) => {
   const {
     theme: { colors },
@@ -27,53 +29,50 @@ export const ProjectCard: FC<IProps> = ({ project }) => {
   console.log(project);
   return (
     <CardContainer>
-      <Col span={4} className="pl-[40px] !w-[150px]">
-        <Flex vertical>
-          <div
-            style={{
-              width: 150,
-              height: 150,
-              background: "url(/images/project.png)",
-              backgroundPosition: "center",
-              backgroundSize: "cover",
-              position: "relative",
-              borderRadius: 12,
-              border: "2px solid var(--Border-Bor-6, #E1E1E1)",
-            }}
-          >
-            <span className="w-[28px] h-[28px] bg-[#CACACA] rounded-[2px] rounded-br-[12px]  absolute right-0 bottom-0 flex justify-center items-center">
+      <Col span={4} className="pl-[40px] h-full">
+        <Flex vertical justify="space-between" className="h-full">
+          <Flex vertical>
+            <div
+              style={{
+                width: 150,
+                height: 150,
+                background: "url(/images/project.png)",
+                backgroundPosition: "center",
+                backgroundSize: "cover",
+                position: "relative",
+                borderRadius: 12,
+                border: "2px solid var(--Border-Bor-6, #E1E1E1)",
+              }}
+            >
+              {/* <span className="w-[28px] h-[28px] bg-[#CACACA] rounded-[2px] rounded-br-[12px]  absolute right-0 bottom-0 flex justify-center items-center">
               1/5
-            </span>
-          </div>
-        </Flex>
-        <Flex gap={6} vertical className="w-[150px]">
-          <C8 style={{ color: colors.text.thirdText }}>میزان پیشرفت :</C8>
-          <Progress
-            className="!w-full"
-            trailColor="rgb(202, 202, 202)"
-            percent={30}
-            type="line"
-            // percent={projectDetails?.Percent_Progressed}
-            // strokeColor={{
-            //   "0%":
-            //     projectDetails &&
-            //     projectDetails.Percent_Progressed <
-            //       projectDetails.Percent_Progressed_Submited
-            //       ? colors.icon.icDan
-            //       : colors.icon.icSuc,
-            //   "100%":
-            //     projectDetails &&
-            //     projectDetails.Percent_Progressed <
-            //       projectDetails.Percent_Progressed_Submited
-            //       ? colors.icon.icDan
-            //       : colors.icon.icSuc,
-            // }}
-            status="active"
-          />
-        </Flex>
-        <Flex justify="space-between" className="w-[150px]">
-          <C8 style={{ color: colors.text.thirdText }}>1402/02/18</C8>
-          <C8 style={{ color: colors.text.thirdText }}>1403/02/15</C8>
+            </span> */}
+            </div>
+          </Flex>
+          <Flex vertical>
+            <Flex gap={6} vertical className="w-[150px]">
+              <Flex justify="space-between">
+                <C8 style={{ color: colors.text.thirdText }}>میزان پیشرفت :</C8>
+                <C5>{project?.PhisicalProgress || 0}%</C5>
+              </Flex>
+              <Progress
+                className="!w-full"
+                trailColor="rgb(202, 202, 202)"
+                percent={project?.PhisicalProgress}
+                type="line"
+                status="active"
+                showInfo={false}
+              />
+            </Flex>
+            <Flex justify="space-between" className="w-[150px]">
+              <C8 style={{ color: colors.text.thirdText }}>
+                {project?.Prj_StartDate}
+              </C8>
+              <C8 style={{ color: colors.text.thirdText }}>
+                {project?.Prj_FinishDate}
+              </C8>
+            </Flex>
+          </Flex>
         </Flex>
       </Col>
       <Col span={20}>
@@ -83,10 +82,12 @@ export const ProjectCard: FC<IProps> = ({ project }) => {
               <Flex align="center" className="w-full" justify="space-between">
                 <Flex align="center">
                   <Flex gap={12} className="!pl-[24px]" align="center">
-                    <T6 style={{ color: colors.text.secondaryText }}>14805</T6>
+                    <T6 style={{ color: colors.text.secondaryText }}>
+                      {project?.Prj_ID}
+                    </T6>
                     <T4 style={{ color: colors.icon.icDef2 }}>_</T4>
                     <T5 style={{ color: colors.text.title }}>
-                      احداث کانال بتنی
+                      {project?.Prj_Name}
                     </T5>
                   </Flex>
                   <Flex gap={8} className="!h-[32px]">
@@ -95,17 +96,19 @@ export const ProjectCard: FC<IProps> = ({ project }) => {
                         color: colors.text.secondaryText,
                       }}
                     >
-                      چهارمحال بختیاری
+                      {project?.Province}
                     </C3>
                     <div className="rectHolder"></div>
-                    <C3 style={{ color: colors.text.secondaryText }}>لردگان</C3>
+                    <C3 style={{ color: colors.text.secondaryText }}>
+                      {project?.City}
+                    </C3>
                   </Flex>
                 </Flex>
                 <C9
                   className="statusHolder"
                   style={{ color: colors.chips.text.green }}
                 >
-                  اتمام یافته
+                  {project?.ExecuteState}
                 </C9>
               </Flex>
               <Row className="w-full" gutter={[0, 12]}>
@@ -123,7 +126,7 @@ export const ProjectCard: FC<IProps> = ({ project }) => {
                         color: colors.text.primaryText,
                       }}
                     >
-                      آب و خاک (جهاد کشاورزی استان )
+                      {project?.Prj_AreaType}
                     </C2>
                   </Flex>
                 </Col>
@@ -141,7 +144,7 @@ export const ProjectCard: FC<IProps> = ({ project }) => {
                         color: colors.text.primaryText,
                       }}
                     >
-                      انتقال آب (کانال) کشاورزی
+                      {project?.Prj_SubjectType}
                     </C2>
                   </Flex>
                 </Col>
@@ -159,7 +162,7 @@ export const ProjectCard: FC<IProps> = ({ project }) => {
                         color: colors.text.primaryText,
                       }}
                     >
-                      آبخیز تا جالیز
+                      {project?.PlanGroup}
                     </C2>
                   </Flex>
                 </Col>
@@ -177,7 +180,7 @@ export const ProjectCard: FC<IProps> = ({ project }) => {
                         color: colors.text.primaryText,
                       }}
                     >
-                      احداث
+                      {project?.SubjectType}
                     </C2>
                   </Flex>
                 </Col>
@@ -195,7 +198,7 @@ export const ProjectCard: FC<IProps> = ({ project }) => {
                         color: colors.text.primaryText,
                       }}
                     >
-                      قرارگاه امام حسین مجتبی
+                      {project?.Unit}
                     </C2>
                   </Flex>
                 </Col>
@@ -203,42 +206,61 @@ export const ProjectCard: FC<IProps> = ({ project }) => {
             </Flex>
           </Col>
           <Col span={24}>
-            <Flex gap={16} className="grayHolder">
-              <C4 style={{ color: colors.text.secondaryText }}>
-                اعتبار پیش بینی شده
-              </C4>
-              <div className="rectHolder"></div>
-              <C1 style={{ color: colors.text.primaryText }}>
-                9,209,200,000,000
-              </C1>
-              <C7 style={{ color: colors.text.secondaryText }}>ریال</C7>
-            </Flex>
-            <Flex gap={16} className="grayHolder">
-              <C4 style={{ color: colors.text.secondaryText }}>اعتبار مصوب </C4>
-              <div className="rectHolder"></div>
-              <C1 style={{ color: colors.text.primaryText }}>
-                9,209,200,000,000
-              </C1>
-              <C7 style={{ color: colors.text.secondaryText }}>ریال</C7>
-            </Flex>
-            <Flex gap={16} className="grayHolder">
-              <C4 style={{ color: colors.text.secondaryText }}>صورت وضعیت </C4>
-              <div className="rectHolder"></div>
-              <C1 style={{ color: colors.text.primaryText }}>
-                9,209,200,000,000
-              </C1>
-              <C7 style={{ color: colors.text.secondaryText }}>ریال</C7>
-            </Flex>
-            <Flex gap={16} className="grayHolder">
-              <C4 style={{ color: colors.text.secondaryText }}>
-                صورت وضعیت تایید شده
-              </C4>
-              <div className="rectHolder"></div>
-              <C1 style={{ color: colors.text.primaryText }}>
-                9,209,200,000,000
-              </C1>
-              <C7 style={{ color: colors.text.secondaryText }}>ریال</C7>
-            </Flex>
+            <Row>
+              <Col span={22}>
+                <Row gutter={[12, 12]}>
+                  <Col span={12}>
+                    <Flex gap={16} className="grayHolder">
+                      <C4 style={{ color: colors.text.secondaryText }}>
+                        اعتبار پیش بینی شده
+                      </C4>
+                      <div className="rectHolder"></div>
+                      <C1 style={{ color: colors.text.primaryText }}>
+                        9,209,200,000,000
+                      </C1>
+                      <C7 style={{ color: colors.text.secondaryText }}>ریال</C7>
+                    </Flex>
+                  </Col>
+                  <Col span={12}>
+                    <Flex gap={16} className="grayHolder">
+                      <C4 style={{ color: colors.text.secondaryText }}>
+                        اعتبار مصوب{" "}
+                      </C4>
+                      <div className="rectHolder"></div>
+                      <C1 style={{ color: colors.text.primaryText }}>
+                        9,209,200,000,000
+                      </C1>
+                      <C7 style={{ color: colors.text.secondaryText }}>ریال</C7>
+                    </Flex>
+                  </Col>
+                  <Col span={12}>
+                    <Flex gap={16} className="grayHolder">
+                      <C4 style={{ color: colors.text.secondaryText }}>
+                        صورت وضعیت{" "}
+                      </C4>
+                      <div className="rectHolder"></div>
+                      <C1 style={{ color: colors.text.primaryText }}>
+                        9,209,200,000,000
+                      </C1>
+                      <C7 style={{ color: colors.text.secondaryText }}>ریال</C7>
+                    </Flex>
+                  </Col>
+                  <Col span={12}>
+                    <Flex gap={16} className="grayHolder">
+                      <C4 style={{ color: colors.text.secondaryText }}>
+                        صورت وضعیت تایید شده
+                      </C4>
+                      <div className="rectHolder"></div>
+                      <C1 style={{ color: colors.text.primaryText }}>
+                        9,209,200,000,000
+                      </C1>
+                      <C7 style={{ color: colors.text.secondaryText }}>ریال</C7>
+                    </Flex>
+                  </Col>
+                </Row>
+              </Col>
+              <Col span={2}></Col>
+            </Row>
           </Col>
         </Row>
       </Col>
