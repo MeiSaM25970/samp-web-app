@@ -1,9 +1,9 @@
 "use client";
-import { Checkbox, Collapse, CollapseProps, Divider, Flex, Spin } from "antd";
+import { Checkbox, Collapse, CollapseProps, Divider, Flex } from "antd";
 import { Dispatch, FC, SetStateAction } from "react";
 import { FilterContainer } from "../styles/Filter.style";
 import Icons from "espil-icons";
-import { C7, T6 } from "@/components/UiKit/Typography";
+import { T6 } from "@/components/UiKit/Typography";
 import { useTheme } from "@/app/theme";
 import _ from "lodash";
 import { useQuery } from "@tanstack/react-query";
@@ -19,7 +19,7 @@ export const Filter: FC<IProps> = ({ setFilter }) => {
     theme: { colors },
   } = useTheme();
 
-  const { data: options, isLoading } = useQuery({
+  const { data: options } = useQuery({
     queryKey: [queryKeys.options],
     queryFn: async () => {
       const res = await fetchFilterOptions();
@@ -118,11 +118,6 @@ export const Filter: FC<IProps> = ({ setFilter }) => {
         <T6>فیلتر</T6>
       </Flex>
       <Divider className="!my-[16px]" />
-      {isLoading && (
-        <Spin>
-          <C7>در حال بارگذاری...</C7>
-        </Spin>
-      )}
       <Collapse
         accordion
         items={items}

@@ -34,3 +34,13 @@ export interface IProject {
   Pmap_Lat: number;
   Pmap_Long: number;
 }
+
+export interface IMap {
+  Pmap_ProjectID: string;
+  Pmap_Lat: number;
+  Pmap_Long: number;
+}
+export interface IMapProject extends IProject {
+  map: IMap[] | null;
+  marker: string | undefined;
+}
