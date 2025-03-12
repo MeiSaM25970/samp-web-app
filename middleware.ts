@@ -4,7 +4,7 @@ import { cookieKey } from "./constants/cookieKey";
 import { verifyJWT } from "./lib/token";
 
 // 1. Specify protected and public routes
-export const protectedRoutes = ["/", "/dashboard"];
+export const protectedRoutes = ["/", "/dashboard", "/map"];
 export const publicRoutes = ["/login", "/api-doc"];
 
 export default async function middleware(req: NextRequest) {

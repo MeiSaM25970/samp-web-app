@@ -3,7 +3,6 @@ import { Col, Flex, Pagination, Row, Spin } from "antd";
 import { FC, useEffect, useMemo, useState } from "react";
 import { ProjectListContainer } from "../styles/ProjectList.style";
 import { Filter } from "./Filter";
-import { IFilterOptions } from "@/app/actions/models";
 import { ProjectCard } from "./Card";
 import { useDashboard } from "../context";
 import { C8 } from "@/components/UiKit/Typography";
@@ -11,11 +10,8 @@ import Icons from "espil-icons";
 import { useTheme } from "@/app/theme";
 import { ProjectTable } from "./Table";
 
-interface IProps {
-  options: IFilterOptions | undefined;
-}
-export const ProjectList: FC<IProps> = ({ options }) => {
-  const { projectList, loading, filter } = useDashboard();
+export const ProjectList: FC = () => {
+  const { projectList, loading, filter, setFilter } = useDashboard();
   const data = useMemo(() => {
     if (projectList) return [...projectList];
     else return [];
@@ -47,7 +43,7 @@ export const ProjectList: FC<IProps> = ({ options }) => {
   return (
     <ProjectListContainer className="mt-[12px]">
       <Col span={4}>
-        <Filter options={options} />
+        <Filter setFilter={setFilter} />
       </Col>
 
       <Col span={20} className="ps-[10px]">
