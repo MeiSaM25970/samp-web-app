@@ -7,9 +7,9 @@ export const useLogin = () => {
   const navigate = useNavigate();
   const { login } = useAuthStore();
 
-  const loginHandler = async ({ accessToken }: ILoginResult) => {
-    localStorage.setItem(USER_JWT_TOKEN, accessToken);
-    login(accessToken);
+  const loginHandler = async ({ token }: ILoginResult) => {
+    localStorage.setItem(USER_JWT_TOKEN, token);
+    login(token);
     navigate(ROUTES.home);
   };
 
