@@ -30,6 +30,7 @@
     "react": "^18",
     "react-dom": "^18",
     "react-leaflet": "^4.2.1",
+    "react-responsive": "^10.0.1",
     "react-router-dom": "^7.3.0",
     "styled-components": "^6.1.15",
     "swagger-ui-react": "^5.19.0",

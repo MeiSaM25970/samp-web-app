@@ -1,4 +1,5 @@
 "use client";
+import { breakPointsMd } from "@/constants/screen";
 import { Flex } from "antd";
 import styled from "styled-components";
 export const MainHeaderContainer = styled(Flex)`
@@ -26,5 +27,14 @@ export const MainHeaderContainer = styled(Flex)`
     font-weight: 500;
     font-size: 20px;
     color: ${(props) => props.theme.colors.icon.icPri};
+  }
+  @media only screen and (max-width: ${breakPointsMd}px) {
+    height: 60px;
+    .samp {
+      font-family: LEMON MILK;
+      font-weight: 500;
+      font-size: 20px;
+      color: ${(props) => props.theme.colors.icon.icPri};
+    }
   }
 `;

@@ -6,6 +6,8 @@ import { UserOutlined } from "@ant-design/icons";
 import Icons from "espil-icons";
 import { useTheme } from "@/app/theme";
 import { logout } from "@/lib/logout";
+import { useMediaQuery } from "react-responsive";
+import { breakPointsMd } from "@/constants/screen";
 
 interface IProps {
   hasNotifications?: boolean;
@@ -14,6 +16,7 @@ export const Profile: FC<IProps> = ({ hasNotifications = true }) => {
   const {
     theme: { colors },
   } = useTheme();
+  const isMobile = !useMediaQuery({ minWidth: breakPointsMd });
 
   const logoutHandler = () => {
     logout();
@@ -47,10 +50,10 @@ export const Profile: FC<IProps> = ({ hasNotifications = true }) => {
       >
         <div className="flex gap-[8px] justify-center cursor-pointer items-center">
           <Icons name="ArrowDownSmall" color={colors.icon.icDef} />
-          <Avatar size={48} icon={<UserOutlined />} />
+          <Avatar size={isMobile ? 36 : 48} icon={<UserOutlined />} />
         </div>
       </Dropdown>
-      {hasNotifications && (
+      {hasNotifications && !isMobile && (
         <div
           style={{
             background: colors.background.bg1,
