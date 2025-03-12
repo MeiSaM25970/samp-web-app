@@ -1,16 +1,20 @@
+"use client";
 import { FC } from "react";
 import { AllProjectsDetails } from "./components/AllProjectDetails";
-import { getFilterOptions } from "@/app/actions";
 import { ProjectList } from "./components/ProjectList";
 import { Col, Row } from "antd";
+import { useDashboard } from "./context";
 
-const Dashboard: FC = async () => {
-  const { data } = await getFilterOptions();
+const Dashboard: FC = () => {
+  const { projectDetails, loading } = useDashboard();
   return (
     <Row>
       <Col span={24}>
-        <AllProjectsDetails />
-        <ProjectList options={data} />
+        <AllProjectsDetails
+          projectDetails={projectDetails}
+          projectDetailsLoading={loading}
+        />
+        <ProjectList />
       </Col>
     </Row>
   );

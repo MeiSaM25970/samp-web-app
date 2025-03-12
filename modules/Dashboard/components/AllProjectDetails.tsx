@@ -4,9 +4,9 @@ import { FC, ReactNode, useMemo } from "react";
 import { AllProjectsDetailsContainer } from "../styles/allProjectsDetails.style";
 
 import { ProjectText } from "./ProjectText";
-import { useDashboard } from "../context";
 import { useTheme } from "@/app/theme";
 import { C7 } from "@/components/UiKit/Typography";
+import { IProjectDetail } from "@/app/actions/models";
 
 interface IMapData {
   label: ReactNode;
@@ -18,8 +18,14 @@ interface IData {
   row1: IMapData[];
   row2: IMapData[];
 }
-export const AllProjectsDetails: FC = () => {
-  const { projectDetails } = useDashboard();
+interface IProps {
+  projectDetails: IProjectDetail | undefined;
+  projectDetailsLoading?: boolean;
+}
+export const AllProjectsDetails: FC<IProps> = ({
+  projectDetails,
+  projectDetailsLoading,
+}) => {
   const {
     theme: { colors },
   } = useTheme();
@@ -76,6 +82,7 @@ export const AllProjectsDetails: FC = () => {
           {data.row1.map((item, index) => (
             <Col {...item.colProps} key={index}>
               <ProjectText
+                loading={projectDetailsLoading}
                 label={item.label}
                 value={
                   Number(item.value)
