@@ -18,12 +18,15 @@ interface IContext {
   projectDetails: IProjectDetail | undefined;
   filter: IGetProjectArg | undefined;
   loading: boolean;
+  showFilter: boolean;
   setFilter: Dispatch<SetStateAction<IGetProjectArg | undefined>>;
+  setShowFilter: Dispatch<SetStateAction<boolean>>;
 }
 export const DashboardContext = createContext<IContext | undefined>(undefined);
 
 export const DashboardProvider: FC<PropsWithChildren> = ({ children }) => {
   const [filter, setFilter] = useState<IGetProjectArg>();
+  const [showFilter, setShowFilter] = useState<boolean>(false);
 
   const get = async () => {
     const { projectDetails, projectList } = await getProject(filter);
@@ -43,6 +46,8 @@ export const DashboardProvider: FC<PropsWithChildren> = ({ children }) => {
     projectList: data?.projectList,
     loading: isLoading,
     setFilter,
+    setShowFilter,
+    showFilter,
   };
   return (
     <DashboardContext.Provider value={contextValue}>

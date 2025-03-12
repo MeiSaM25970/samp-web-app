@@ -7,6 +7,7 @@ import { useDashboard } from "./context";
 import { breakPointsMd } from "@/constants/screen";
 import { AllProjectsDetailsMobile } from "./components/mobile/AllProjectDetail";
 import { useMediaQuery } from "react-responsive";
+import { ProjectListMobile } from "./components/mobile/ProjectList";
 
 const Dashboard: FC = () => {
   const { projectDetails, loading } = useDashboard();
@@ -16,18 +17,22 @@ const Dashboard: FC = () => {
     <Row>
       <Col span={24}>
         {isMobile ? (
-          <AllProjectsDetailsMobile
-            projectDetails={projectDetails}
-            projectDetailsLoading={loading}
-          />
+          <>
+            <AllProjectsDetailsMobile
+              projectDetails={projectDetails}
+              projectDetailsLoading={loading}
+            />
+            <ProjectListMobile />
+          </>
         ) : (
-          <AllProjectsDetails
-            projectDetails={projectDetails}
-            projectDetailsLoading={loading}
-          />
+          <>
+            <AllProjectsDetails
+              projectDetails={projectDetails}
+              projectDetailsLoading={loading}
+            />
+            <ProjectList />
+          </>
         )}
-
-        <ProjectList />
       </Col>
     </Row>
   );

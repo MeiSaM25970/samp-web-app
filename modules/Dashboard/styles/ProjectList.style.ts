@@ -1,4 +1,5 @@
 "use client";
+import { breakPointsMd } from "@/constants/screen";
 import { Row } from "antd";
 import styled from "styled-components";
 
@@ -8,4 +9,6 @@ export const ProjectListContainer = styled(Row)`
   background: ${({ theme }) => theme.colors.background.bg3};
   /* 2 */
   box-shadow: 0px 4px 6px 0px rgba(19, 19, 19, 0.25);
+  @media only screen and(max-width:${breakPointsMd}px ) {
+  }
 `;

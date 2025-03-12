@@ -14,6 +14,11 @@ export const FilterContainer = styled(Flex)`
     display: flex;
     flex-direction: column;
   }
-  .filter-collapse {
+`;
+export const FilterModalMobileContainer = styled.div`
+  width: 100%;
+  .checkBoxGroup {
+    display: flex;
+    flex-direction: column;
   }
 `;
