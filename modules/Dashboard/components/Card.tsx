@@ -1,7 +1,7 @@
 "use client";
 import { FC } from "react";
 import { CardContainer } from "../styles/card.style";
-import { Col, Divider, Flex, Progress, Row } from "antd";
+import { Button, Col, Flex, Progress, Row } from "antd";
 import { IProject } from "@/app/actions/models";
 import {
   C1,
@@ -17,6 +17,7 @@ import {
   T6,
 } from "@/components/UiKit/Typography";
 import { useTheme } from "@/app/theme";
+import Icons from "espil-icons";
 
 interface IProps {
   project: IProject | undefined;
@@ -26,11 +27,10 @@ export const ProjectCard: FC<IProps> = ({ project }) => {
   const {
     theme: { colors },
   } = useTheme();
-  console.log(project);
   return (
     <CardContainer>
-      <Col span={4} className="pl-[40px] h-full">
-        <Flex vertical justify="space-between" className="h-full">
+      <Col span={4} className="pl-[40px] ">
+        <Flex vertical justify="space-between" className="h-[248px]">
           <Flex vertical>
             <div
               style={{
@@ -111,7 +111,7 @@ export const ProjectCard: FC<IProps> = ({ project }) => {
                   {project?.ExecuteState}
                 </C9>
               </Flex>
-              <Row className="w-full" gutter={[0, 12]}>
+              <Row className="w-full mt-[12px] leading-[32px]" gutter={[0, 12]}>
                 <Col span={8}>
                   <Flex gap={12}>
                     <C2
@@ -126,7 +126,7 @@ export const ProjectCard: FC<IProps> = ({ project }) => {
                         color: colors.text.primaryText,
                       }}
                     >
-                      {project?.Prj_AreaType}
+                      {project?.Pat_Name}
                     </C2>
                   </Flex>
                 </Col>
@@ -144,7 +144,7 @@ export const ProjectCard: FC<IProps> = ({ project }) => {
                         color: colors.text.primaryText,
                       }}
                     >
-                      {project?.Prj_SubjectType}
+                      {project?.SubjectType}
                     </C2>
                   </Flex>
                 </Col>
@@ -180,7 +180,7 @@ export const ProjectCard: FC<IProps> = ({ project }) => {
                         color: colors.text.primaryText,
                       }}
                     >
-                      {project?.SubjectType}
+                      {project?.TechnicalType}
                     </C2>
                   </Flex>
                 </Col>
@@ -206,8 +206,8 @@ export const ProjectCard: FC<IProps> = ({ project }) => {
             </Flex>
           </Col>
           <Col span={24}>
-            <Row>
-              <Col span={22}>
+            <Row align={"bottom"} className="pt-[8px]">
+              <Col span={21}>
                 <Row gutter={[12, 12]}>
                   <Col span={12}>
                     <Flex gap={16} className="grayHolder">
@@ -216,7 +216,11 @@ export const ProjectCard: FC<IProps> = ({ project }) => {
                       </C4>
                       <div className="rectHolder"></div>
                       <C1 style={{ color: colors.text.primaryText }}>
-                        9,209,200,000,000
+                        {project && project?.Prj_TotalCredit !== undefined
+                          ? Number(project?.Prj_TotalCredit).toLocaleString(
+                              "fa-IR"
+                            )
+                          : "--"}
                       </C1>
                       <C7 style={{ color: colors.text.secondaryText }}>ریال</C7>
                     </Flex>
@@ -228,7 +232,11 @@ export const ProjectCard: FC<IProps> = ({ project }) => {
                       </C4>
                       <div className="rectHolder"></div>
                       <C1 style={{ color: colors.text.primaryText }}>
-                        9,209,200,000,000
+                        {project && project?.CreditAllocation !== undefined
+                          ? Number(project?.CreditAllocation).toLocaleString(
+                              "fa-IR"
+                            )
+                          : "--"}
                       </C1>
                       <C7 style={{ color: colors.text.secondaryText }}>ریال</C7>
                     </Flex>
@@ -240,7 +248,9 @@ export const ProjectCard: FC<IProps> = ({ project }) => {
                       </C4>
                       <div className="rectHolder"></div>
                       <C1 style={{ color: colors.text.primaryText }}>
-                        9,209,200,000,000
+                        {project && project?.Cust !== undefined
+                          ? Number(project?.Cust).toLocaleString("fa-IR")
+                          : "--"}
                       </C1>
                       <C7 style={{ color: colors.text.secondaryText }}>ریال</C7>
                     </Flex>
@@ -252,14 +262,29 @@ export const ProjectCard: FC<IProps> = ({ project }) => {
                       </C4>
                       <div className="rectHolder"></div>
                       <C1 style={{ color: colors.text.primaryText }}>
-                        9,209,200,000,000
+                        {project && project?.Prj_Amount !== undefined
+                          ? Number(project?.Prj_Amount).toLocaleString("fa-IR")
+                          : "--"}
                       </C1>
                       <C7 style={{ color: colors.text.secondaryText }}>ریال</C7>
                     </Flex>
                   </Col>
                 </Row>
               </Col>
-              <Col span={2}></Col>
+              <Col span={3}>
+                <Button
+                  color="primary"
+                  variant="link"
+                  className="flex justify-center items-center"
+                >
+                  <span>بیشتر</span>
+                  <Icons
+                    color={colors.icon.icPri}
+                    name="BackSingleColor"
+                    size={16}
+                  />
+                </Button>
+              </Col>
             </Row>
           </Col>
         </Row>

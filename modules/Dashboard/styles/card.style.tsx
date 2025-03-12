@@ -9,11 +9,12 @@ export const CardContainer = styled(Row)`
   background: ${({ theme }) => theme.colors.background.baseBg};
   /* 3 */
   box-shadow: 2px 6px 16px 0px rgba(0, 0, 0, 0.18);
-  height: 288px;
+  /* height: 288px; */
   .rectHolder {
     border-radius: 6px;
     background: ${({ theme }) => theme.colors.icon.icDisable};
     width: 2px;
+    height: 20px;
   }
   .statusHolder {
     border-radius: 8px;
@@ -27,9 +28,11 @@ export const CardContainer = styled(Row)`
     align-items: center;
   }
   .grayHolder {
-    width: 370px;
     padding: 4px 12px;
     border-radius: 8px;
     background: ${({ theme }) => theme.colors.project.priceBG};
+    height: 40px;
+    align-items: center;
+    line-height: 32px;
   }
 `;
