@@ -1,18 +1,107 @@
 "use client";
-import { Col } from "antd";
-import { FC } from "react";
-import { MapContainer } from "../styles/Map.style";
-import { Filter } from "@/modules/Dashboard/components/Filter";
-import { useMap } from "../context";
 
-export const MapSession: FC = () => {
-  const { setFilter } = useMap();
+import {
+  MapContainer,
+  TileLayer,
+  Marker,
+  useMap as useLeafletMap,
+} from "react-leaflet";
+import "leaflet/dist/leaflet.css";
+import { useMap } from "../context";
+import { Polygon } from "react-leaflet";
+import { LatLngExpression } from "leaflet";
+import L from "leaflet";
+import { useTheme } from "@/app/theme";
+import styled from "styled-components";
+import { Dispatch, FC, SetStateAction } from "react";
+import { IMapProject } from "@/app/actions/models";
+
+const iranCenter: [number, number] = [32.4279, 53.688]; // مرکز ایران
+
+interface IProps {
+  setProjectDetail: Dispatch<SetStateAction<IMapProject | undefined>>;
+}
+const MapComponent: React.FC<IProps> = ({ setProjectDetail }) => {
+  const { mapProjectList } = useMap();
+  const purpleOptions = { color: "purple" };
+  const {
+    theme: { colors },
+  } = useTheme();
   return (
-    <MapContainer className="mt-[12px]">
-      <Col span={4}>
-        <Filter setFilter={setFilter} />
-      </Col>
-      <Col span={20} className="ps-[10px]"></Col>
-    </MapContainer>
+    <MapWrapper
+      center={iranCenter}
+      zoom={5.3}
+      style={{
+        width: "100%",
+        border: "1px solid",
+        borderColor: colors.border.bor1,
+        borderRadius: 32,
+      }}
+    >
+      <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+      {mapProjectList?.map((project, index) => {
+        if (project.map && project.map.length > 1) {
+          const positions: LatLngExpression[] = project.map.map((i) => [
+            i.Pmap_Lat,
+            i.Pmap_Long,
+          ]);
+
+          return (
+            <Polygon
+              positions={positions}
+              key={index}
+              pathOptions={purpleOptions}
+            />
+          );
+        } else {
+          if (project.map && project.map.length === 1) {
+            return (
+              <LocationMarker
+                key={index}
+                onMarkerClick={() => setProjectDetail(project)}
+                project={project}
+              />
+            );
+          }
+        }
+      })}
+    </MapWrapper>
   );
 };
+
+export default MapComponent;
+
+interface IPropsLocation {
+  project: IMapProject;
+  onMarkerClick: () => void;
+}
+const LocationMarker: FC<IPropsLocation> = ({ project, onMarkerClick }) => {
+  const map = useLeafletMap();
+  const location: LatLngExpression = project.map
+    ? [project.map[0].Pmap_Lat, project.map[0].Pmap_Long]
+    : iranCenter;
+  const handleMarkerClick = () => {
+    onMarkerClick();
+    map.flyTo(location, 9, {
+      duration: 2, // مدت زمان انیمیشن به ثانیه
+    });
+  };
+  const customIcon = new L.Icon({
+    iconUrl: project.marker,
+    iconSize: [32, 32], // اندازه‌ی آیکون
+    iconAnchor: [16, 32], // نقطه‌ی لنگر آیکون
+    popupAnchor: [0, -32], // موقعیت پاپ‌آپ نسبت به آیکون
+    className: "rounded-[4px]",
+  });
+  return (
+    <Marker
+      position={location}
+      eventHandlers={{ click: handleMarkerClick }}
+      icon={customIcon}
+    />
+  );
+};
+
+const MapWrapper = styled(MapContainer)`
+  height: 100%;
+`;

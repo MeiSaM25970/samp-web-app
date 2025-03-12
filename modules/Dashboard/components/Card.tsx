@@ -248,8 +248,10 @@ export const ProjectCard: FC<IProps> = ({ project }) => {
                       </C4>
                       <div className="rectHolder"></div>
                       <C1 style={{ color: colors.text.primaryText }}>
-                        {project && project?.Cust !== undefined
-                          ? Number(project?.Cust).toLocaleString("fa-IR")
+                        {project && project?.Prj_TotalCredit !== undefined
+                          ? Number(project?.Prj_TotalCredit).toLocaleString(
+                              "fa-IR"
+                            )
                           : "--"}
                       </C1>
                       <C7 style={{ color: colors.text.secondaryText }}>ریال</C7>
@@ -262,8 +264,8 @@ export const ProjectCard: FC<IProps> = ({ project }) => {
                       </C4>
                       <div className="rectHolder"></div>
                       <C1 style={{ color: colors.text.primaryText }}>
-                        {project && project?.Prj_Amount !== undefined
-                          ? Number(project?.Prj_Amount).toLocaleString("fa-IR")
+                        {project && project?.Cust !== undefined
+                          ? Number(project?.Cust).toLocaleString("fa-IR")
                           : "--"}
                       </C1>
                       <C7 style={{ color: colors.text.secondaryText }}>ریال</C7>

@@ -1,5 +1,9 @@
 "use client";
-import { IGetProjectArg, IProjectDetail } from "@/app/actions/models";
+import {
+  IGetProjectArg,
+  IMapProject,
+  IProjectDetail,
+} from "@/app/actions/models";
 import { queryKeys } from "@/constants/queryKeys";
 import { useQuery } from "@tanstack/react-query";
 import {
@@ -17,6 +21,7 @@ interface IContext {
   projectDetails: IProjectDetail | undefined;
   filter: IGetProjectArg | undefined;
   loading: boolean;
+  mapProjectList: IMapProject[] | undefined;
   setFilter: Dispatch<SetStateAction<IGetProjectArg | undefined>>;
 }
 export const MapContext = createContext<IContext | undefined>(undefined);
@@ -25,9 +30,12 @@ export const MapProvider: FC<PropsWithChildren> = ({ children }) => {
   const [filter, setFilter] = useState<IGetProjectArg>();
 
   const get = async () => {
-    const { projectDetails } = await fetchProjectDetails(filter);
+    const { projectDetails, mapProjectList } = await fetchProjectDetails(
+      filter
+    );
     return {
       projectDetails,
+      mapProjectList,
     };
   };
 
@@ -40,6 +48,7 @@ export const MapProvider: FC<PropsWithChildren> = ({ children }) => {
     filter,
     projectDetails: data?.projectDetails,
     loading: isLoading,
+    mapProjectList: data?.mapProjectList,
     setFilter,
   };
   return (

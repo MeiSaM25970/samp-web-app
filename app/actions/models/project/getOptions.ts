@@ -11,3 +11,10 @@ export interface IFilterOptions {
   executeState: IOption[];
   supervisor: IOption[];
 }
+
+export interface ISubjectType {
+  Pst_Name: string;
+  Pst_Group: string;
+  Pst_PlaceMarker: Buffer;
+  Pst_ID: string;
+}
