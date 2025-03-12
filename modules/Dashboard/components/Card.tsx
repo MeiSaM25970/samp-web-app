@@ -126,7 +126,7 @@ export const ProjectCard: FC<IProps> = ({ project }) => {
                         color: colors.text.primaryText,
                       }}
                     >
-                      {project?.Prj_AreaType}
+                      {project?.Pat_Name}
                     </C2>
                   </Flex>
                 </Col>
@@ -144,7 +144,7 @@ export const ProjectCard: FC<IProps> = ({ project }) => {
                         color: colors.text.primaryText,
                       }}
                     >
-                      {project?.Prj_SubjectType}
+                      {project?.SubjectType}
                     </C2>
                   </Flex>
                 </Col>
