@@ -228,7 +228,7 @@ export const ProjectCard: FC<IProps> = ({ project }) => {
                   <Col span={12}>
                     <Flex gap={16} className="grayHolder">
                       <C4 style={{ color: colors.text.secondaryText }}>
-                        اعتبار مصوب{" "}
+                        اعتبار مصوب
                       </C4>
                       <div className="rectHolder"></div>
                       <C1 style={{ color: colors.text.primaryText }}>
@@ -244,7 +244,7 @@ export const ProjectCard: FC<IProps> = ({ project }) => {
                   <Col span={12}>
                     <Flex gap={16} className="grayHolder">
                       <C4 style={{ color: colors.text.secondaryText }}>
-                        صورت وضعیت{" "}
+                        صورت وضعیت
                       </C4>
                       <div className="rectHolder"></div>
                       <C1 style={{ color: colors.text.primaryText }}>

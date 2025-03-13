@@ -20,6 +20,7 @@
     "crypto": "^1.0.1",
     "css-loader": "^7.1.2",
     "espil-icons": "^0.2.5",
+    "framer-motion": "^12.5.0",
     "jose": "^6.0.8",
     "jsonwebtoken": "^9.0.2",
     "lodash": "^4.17.21",
