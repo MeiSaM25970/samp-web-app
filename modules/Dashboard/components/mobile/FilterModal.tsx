@@ -1,5 +1,5 @@
 import { Button, Checkbox, Collapse, CollapseProps, Flex, Modal } from "antd";
-import { FC } from "react";
+import { FC, useState } from "react";
 import { useDashboard } from "../../context";
 import { C2 } from "@/components/UiKit/Typography";
 import { FilterModalMobileContainer } from "../../styles/Filter.style";
@@ -15,10 +15,30 @@ export const FilterModalMobile: FC = () => {
   const {
     theme: { colors },
   } = useTheme();
+  const [activeKey, setActiveKey] = useState<string | string[]>([]);
+  const [checkboxStates, setCheckboxStates] = useState({
+    executeState: [],
+    planGroups: [],
+    areaType: [],
+    subjectType: [],
+    technicalType: [],
+    province: [],
+    supervisor: [],
+  });
 
   const handleCancel = () => {
     setFilter(undefined);
     setShowFilter(false);
+    setActiveKey([]);
+    setCheckboxStates({
+      executeState: [],
+      planGroups: [],
+      areaType: [],
+      subjectType: [],
+      technicalType: [],
+      province: [],
+      supervisor: [],
+    });
   };
   const handleOk = () => {
     setShowFilter(false);
@@ -32,10 +52,20 @@ export const FilterModalMobile: FC = () => {
     },
   });
 
+  // const onChange = (type: string, value: number[] | string) => {
+  //   setFilter((prev) => ({
+  //     ...prev,
+  //     [type]: _.isArray(value) ? value.join(",") : value,
+  //   }));
+  // };
   const onChange = (type: string, value: number[] | string) => {
     setFilter((prev) => ({
       ...prev,
       [type]: _.isArray(value) ? value.join(",") : value,
+    }));
+    setCheckboxStates((prev) => ({
+      ...prev,
+      [type]: value,
     }));
   };
   const items: CollapseProps["items"] = [
@@ -47,6 +77,7 @@ export const FilterModalMobile: FC = () => {
           options={options?.executeState}
           className="checkBoxGroup"
           onChange={(value) => onChange("executeState", value)}
+          value={checkboxStates.executeState}
         />
       ),
     },
@@ -58,6 +89,7 @@ export const FilterModalMobile: FC = () => {
           options={options?.planGroups}
           className="checkBoxGroup"
           onChange={(value) => onChange("planGroups", value)}
+          value={checkboxStates.planGroups}
         />
       ),
     },
@@ -69,6 +101,7 @@ export const FilterModalMobile: FC = () => {
           options={options?.areaType}
           className="checkBoxGroup"
           onChange={(value) => onChange("areaType", value)}
+          value={checkboxStates.areaType}
         />
       ),
     },
@@ -80,6 +113,7 @@ export const FilterModalMobile: FC = () => {
           options={options?.subjectType}
           className="checkBoxGroup"
           onChange={(value) => onChange("subjectType", value)}
+          value={checkboxStates.subjectType}
         />
       ),
     },
@@ -91,6 +125,7 @@ export const FilterModalMobile: FC = () => {
           options={options?.technicalType}
           className="checkBoxGroup"
           onChange={(value) => onChange("technicalType", value)}
+          value={checkboxStates.technicalType}
         />
       ),
     },
@@ -102,6 +137,7 @@ export const FilterModalMobile: FC = () => {
           options={options?.province}
           className="checkBoxGroup"
           onChange={(value) => onChange("province", value)}
+          value={checkboxStates.province}
         />
       ),
     },
@@ -113,6 +149,7 @@ export const FilterModalMobile: FC = () => {
           options={options?.supervisor}
           className="checkBoxGroup"
           onChange={(value) => onChange("supervisor", value)}
+          value={checkboxStates.supervisor}
         />
       ),
     },
@@ -121,6 +158,7 @@ export const FilterModalMobile: FC = () => {
     <Modal
       title={<C2>فیلتر</C2>}
       open={showFilter}
+      onCancel={handleCancel}
       footer={
         <Flex justify="space-between">
           <Button onClick={() => handleCancel()}>لغو فیلتر</Button>
@@ -135,6 +173,8 @@ export const FilterModalMobile: FC = () => {
           accordion
           items={items}
           rootClassName="filter-collapse"
+          activeKey={activeKey}
+          onChange={(keys) => setActiveKey(keys)}
           expandIcon={({ isActive }) => {
             if (isActive)
               return <Icons name="ArrowUpSmall" color={colors.icon.icPri} />;
