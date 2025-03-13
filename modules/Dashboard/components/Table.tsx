@@ -1,3 +1,4 @@
+"use client";
 import { IProject } from "@/app/actions/models";
 import { Col, Row, Table, TableProps } from "antd";
 import { FC } from "react";

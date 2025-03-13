@@ -1,3 +1,4 @@
+"use client";
 import { useTheme } from "@/app/theme";
 import { Flex } from "antd";
 import Icons from "espil-icons";

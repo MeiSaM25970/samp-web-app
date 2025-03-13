@@ -1,18 +1,18 @@
 "use client";
 import { Button, Checkbox, Collapse, CollapseProps, Flex, Modal } from "antd";
 import { FC, useState } from "react";
-import { useDashboard } from "../../context";
 import { C2 } from "@/components/UiKit/Typography";
-import { FilterModalMobileContainer } from "../../styles/Filter.style";
 import Icons from "espil-icons";
 import { useTheme } from "@/app/theme";
 import { useQuery } from "@tanstack/react-query";
 import { queryKeys } from "@/constants/queryKeys";
-import { fetchFilterOptions } from "../../getData";
 import _ from "lodash";
+import { fetchFilterOptions } from "@/modules/Dashboard/getData";
+import { useMap } from "../context";
+import { FilterModalMobileContainer } from "@/modules/Dashboard/styles/Filter.style";
 
 export const FilterModalMobile: FC = () => {
-  const { showFilter, setShowFilter, setFilter } = useDashboard();
+  const { showFilter, setShowFilter, setFilter } = useMap();
   const {
     theme: { colors },
   } = useTheme();

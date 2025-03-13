@@ -1,3 +1,4 @@
+"use client";
 import { FC } from "react";
 import { Flex } from "antd";
 import { MainHeaderContainer } from "../../style/MainHeader";
@@ -14,7 +15,7 @@ export const MainHeader: FC = () => {
     <MainHeaderContainer>
       <Flex align="center" justify="space-between" className="w-full box">
         {isMobile ? <HeaderTitleMobile /> : <HeaderTitle />}
-        {isMobile ? "" : <HeaderLogo />}
+        {isMobile ? <div /> : <HeaderLogo />}
         <Profile />
       </Flex>
     </MainHeaderContainer>

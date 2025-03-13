@@ -1,15 +1,20 @@
 "use client";
 import { FC } from "react";
 import { Col, Flex, Progress, Tabs, TabsProps } from "antd";
-import { IMapProject } from "@/app/actions/models";
+import { IMapProject, IProjectById } from "@/app/actions/models";
 import { C2, C3, C4, C5, C8, C9, T5, T6 } from "@/components/UiKit/Typography";
 import { useTheme } from "@/app/theme";
 import { MapProjectInfoContainer } from "../styles/MapProjectInfo.style";
 import { Etebarha } from "./Etebarha";
 import Icons from "espil-icons";
+import { useMediaQuery } from "react-responsive";
+import { breakPointsMd } from "@/constants/screen";
+import { useQuery } from "@tanstack/react-query";
+import { fetchProjectFiles } from "../getData";
+import { FilesComponent } from "./Files";
 
 interface IProps {
-  project: IMapProject | undefined;
+  project: IProjectById | undefined;
   onClose: () => void;
 }
 
@@ -17,6 +22,16 @@ export const MapProjectInfo: FC<IProps> = ({ project, onClose }) => {
   const {
     theme: { colors },
   } = useTheme();
+  const isMobile = useMediaQuery({ maxWidth: breakPointsMd });
+  const { data: projectFile, isLoading } = useQuery({
+    queryKey: ["fetchProjectFiles"],
+    enabled: !!project,
+    queryFn: async () => {
+      const res = await fetchProjectFiles(project?.Prj_ID);
+      if (res) return res;
+    },
+  });
+
   const items: TabsProps["items"] = [
     {
       key: "1",
@@ -32,12 +47,12 @@ export const MapProjectInfo: FC<IProps> = ({ project, onClose }) => {
           <Flex gap={6} vertical className="w-full">
             <Flex justify="space-between">
               <C8 style={{ color: colors.text.thirdText }}>میزان پیشرفت :</C8>
-              <C5>{project?.PhisicalProgress || 0}%</C5>
+              <C5>{project?.Percent_Progressed || 0}%</C5>
             </Flex>
             <Progress
               className="!w-full"
               trailColor="rgb(202, 202, 202)"
-              percent={project?.PhisicalProgress}
+              percent={project?.Percent_Progressed}
               type="line"
               status="active"
               showInfo={false}
@@ -45,15 +60,19 @@ export const MapProjectInfo: FC<IProps> = ({ project, onClose }) => {
           </Flex>
           <Flex justify="space-between" className="w-full">
             <C9 style={{ color: colors.text.thirdText }}>وزن :</C9>
-            <C5 style={{ color: colors.text.thirdText }}>{project?.Cust}</C5>
+            <C5 style={{ color: colors.text.thirdText }}>
+              {project?.PhisicalProgress}
+            </C5>
           </Flex>
         </div>
       ),
     },
     {
       key: "3",
-      label: "تصاویر",
-      children: <div className="h-[100px]"></div>,
+      label: "فایل ها",
+      children: (
+        <FilesComponent projectFiles={projectFile} loading={isLoading} />
+      ),
     },
   ];
   return (
@@ -63,19 +82,34 @@ export const MapProjectInfo: FC<IProps> = ({ project, onClose }) => {
           <T6 style={{ color: colors.text.secondaryText }}>
             {project?.Prj_ID}
           </T6>
-          <Flex gap={8} align="center">
+          <Flex gap={8} align="center" className={isMobile ? "!pe-[32px]" : ""}>
             <C9
               className="statusHolder"
-              style={{ color: colors.chips.text.green }}
+              style={{
+                color:
+                  project?.ExecuteState === "شروع نشده"
+                    ? colors.chips.text.red
+                    : colors.chips.text.green,
+                background:
+                  project?.ExecuteState === "شروع نشده"
+                    ? colors.chips.bg.red
+                    : colors.chips.bg.green,
+                borderColor:
+                  project?.ExecuteState === "شروع نشده"
+                    ? colors.chips.stroke.red
+                    : colors.chips.stroke.green,
+              }}
             >
               {project?.ExecuteState}
             </C9>
-            <Icons
-              name="Close"
-              color={colors.icon.icDef}
-              onClick={onClose}
-              className="cursor-pointer"
-            />
+            {!isMobile && (
+              <Icons
+                name="Close"
+                color={colors.icon.icDef}
+                onClick={onClose}
+                className="cursor-pointer"
+              />
+            )}
           </Flex>
         </Flex>
       </Col>

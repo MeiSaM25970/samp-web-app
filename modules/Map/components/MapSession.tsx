@@ -4,14 +4,13 @@ import { FC, useState } from "react";
 import { MapContainer } from "../styles/Map.style";
 import { Filter } from "@/modules/Dashboard/components/Filter";
 import { useMap } from "../context";
-import MapComponent from "./Map";
-import { IMapProject } from "@/app/actions/models";
+import { IMapProject, IProjectById } from "@/app/actions/models";
 import { MapProjectInfo } from "./MapProjectInfo";
-
+import dynamic from "next/dynamic";
+const MapComponent = dynamic(() => import("./Map"), { ssr: false });
 export const MapSession: FC = () => {
   const { setFilter } = useMap();
-  const [projectDetail, setProjectDetail] = useState<IMapProject>();
-  console.log({ projectDetail });
+  const [projectDetail, setProjectDetail] = useState<IProjectById>();
   return (
     <MapContainer className="mt-[12px]" gutter={12}>
       <Col span={4}>

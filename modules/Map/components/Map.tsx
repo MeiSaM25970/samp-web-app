@@ -11,32 +11,39 @@ import { useMap } from "../context";
 import { Polygon } from "react-leaflet";
 import { LatLngExpression } from "leaflet";
 import L from "leaflet";
-import { useTheme } from "@/app/theme";
 import styled from "styled-components";
 import { Dispatch, FC, SetStateAction } from "react";
-import { IMapProject } from "@/app/actions/models";
+import { IMapProject, IProjectById } from "@/app/actions/models";
+import { breakPointsMd } from "@/constants/screen";
+import { useMediaQuery } from "react-responsive";
+import { fetchProjectById } from "../getData";
 
 const iranCenter: [number, number] = [32.4279, 53.688]; // مرکز ایران
 
 interface IProps {
-  setProjectDetail: Dispatch<SetStateAction<IMapProject | undefined>>;
+  setProjectDetail: Dispatch<SetStateAction<IProjectById | undefined>>;
+  setLoading?: Dispatch<SetStateAction<boolean>>;
 }
-const MapComponent: React.FC<IProps> = ({ setProjectDetail }) => {
+const MapComponent: React.FC<IProps> = ({ setProjectDetail, setLoading }) => {
   const { mapProjectList } = useMap();
   const purpleOptions = { color: "purple" };
-  const {
-    theme: { colors },
-  } = useTheme();
+
+  const isMobile = !useMediaQuery({ minWidth: breakPointsMd });
+  const onMarkerClick = async (id: string) => {
+    try {
+      if (setLoading) setLoading(true);
+      const projectDetail = await fetchProjectById(id);
+      if (projectDetail) setProjectDetail(projectDetail);
+    } catch {
+    } finally {
+      if (setLoading) setLoading(false);
+    }
+  };
   return (
     <MapWrapper
       center={iranCenter}
-      zoom={5.3}
-      style={{
-        width: "100%",
-        border: "1px solid",
-        borderColor: colors.border.bor1,
-        borderRadius: 32,
-      }}
+      zoom={isMobile ? 4.4 : 5.3}
+      touchZoom={"center"}
     >
       <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
       {mapProjectList?.map((project, index) => {
@@ -58,7 +65,7 @@ const MapComponent: React.FC<IProps> = ({ setProjectDetail }) => {
             return (
               <LocationMarker
                 key={index}
-                onMarkerClick={() => setProjectDetail(project)}
+                onMarkerClick={() => onMarkerClick(project.Prj_ID)}
                 project={project}
               />
             );
@@ -103,5 +110,12 @@ const LocationMarker: FC<IPropsLocation> = ({ project, onMarkerClick }) => {
 };
 
 const MapWrapper = styled(MapContainer)`
+  border: 1px solid;
+  border-color: ${({ theme: { colors } }) => colors.border.bor1};
+  border-radius: 32px;
+  width: 100%;
   height: 100%;
+  @media only screen and (max-width: ${breakPointsMd}px) {
+    height: ${() => window.innerWidth - 24 - 8}px;
+  }
 `;
