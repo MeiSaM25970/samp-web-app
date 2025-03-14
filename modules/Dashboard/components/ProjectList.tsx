@@ -5,7 +5,7 @@ import { ProjectListContainer } from "../styles/ProjectList.style";
 import { Filter } from "./Filter";
 import { ProjectCard } from "./Card";
 import { useDashboard } from "../context";
-import { C8 } from "@/components/UiKit/Typography";
+import { C8, T5 } from "@/components/UiKit/Typography";
 import Icons from "espil-icons";
 import { useTheme } from "@/app/theme";
 import { ProjectTable } from "./Table";
@@ -51,6 +51,7 @@ export const ProjectList: FC = () => {
       setShowTable(true);
     } else setShowTable(false);
   }, [searchParams]);
+  console.log({ currentData });
   return (
     <ProjectListContainer className="mt-[12px]">
       <Col span={4}>
@@ -92,7 +93,6 @@ export const ProjectList: FC = () => {
             </Flex>
           </Col>
         </Row>
-
         {showTable ? (
           <ProjectTable />
         ) : (
@@ -110,6 +110,10 @@ export const ProjectList: FC = () => {
                     <Spin size="small" />
                     <C8>در حال بارگذاری...</C8>
                   </Flex>
+                ) : currentData?.length === 0 ? (
+                  <Flex justify="center" align="center" className="h-[300px]">
+                    <T5>پروژه ای یافت نشد...</T5>
+                  </Flex>
                 ) : (
                   currentData.map((project, index) => (
                     <ProjectCard project={project} key={index} />
@@ -117,18 +121,20 @@ export const ProjectList: FC = () => {
                 )}
               </Flex>
             </Col>
-            <Col span={24} className="pt-[32px]">
-              <Pagination
-                current={currentPage}
-                total={data.length}
-                pageSize={pageSize}
-                onChange={handlePageChange}
-                showSizeChanger
-                showQuickJumper
-                align="center"
-                className="flex items-center"
-              />
-            </Col>
+            {currentData?.length !== 0 && (
+              <Col span={24} className="pt-[32px]">
+                <Pagination
+                  current={currentPage}
+                  total={data.length}
+                  pageSize={pageSize}
+                  onChange={handlePageChange}
+                  showSizeChanger
+                  showQuickJumper
+                  align="center"
+                  className="flex items-center"
+                />
+              </Col>
+            )}
           </Row>
         )}
       </Col>
