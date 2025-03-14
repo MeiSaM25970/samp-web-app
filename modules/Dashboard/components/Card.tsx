@@ -108,7 +108,20 @@ export const ProjectCard: FC<IProps> = ({ project }) => {
                 </Flex>
                 <C9
                   className="statusHolder"
-                  style={{ color: colors.chips.text.green }}
+                  style={{
+                    color:
+                      project?.ExecuteState === "شروع نشده"
+                        ? colors.chips.text.red
+                        : colors.chips.text.green,
+                    background:
+                      project?.ExecuteState === "شروع نشده"
+                        ? colors.chips.bg.red
+                        : colors.chips.bg.green,
+                    borderColor:
+                      project?.ExecuteState === "شروع نشده"
+                        ? colors.chips.stroke.red
+                        : colors.chips.stroke.green,
+                  }}
                 >
                   {project?.ExecuteState}
                 </C9>
