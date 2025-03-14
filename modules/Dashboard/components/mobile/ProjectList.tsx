@@ -83,7 +83,7 @@ export const ProjectListMobile: FC = () => {
                   transition={{ duration: 0.7 }}
                 >
                   <Input
-                    placeholder="جستجوی کد پروژه"
+                    placeholder="جستجوی کد و عنوان پروژه"
                     ref={inputRef}
                     style={{
                       height: 40,
