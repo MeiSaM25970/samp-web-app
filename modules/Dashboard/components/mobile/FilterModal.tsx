@@ -1,5 +1,13 @@
 "use client";
-import { Button, Checkbox, Collapse, CollapseProps, Flex, Modal } from "antd";
+import {
+  Button,
+  Checkbox,
+  Collapse,
+  CollapseProps,
+  Flex,
+  Modal,
+  Slider,
+} from "antd";
 import { FC, useState } from "react";
 import { useDashboard } from "../../context";
 import { C2 } from "@/components/UiKit/Typography";
@@ -167,6 +175,18 @@ export const FilterModalMobile: FC = () => {
           className="checkBoxGroup"
           onChange={(value) => onChange("supervisor", value)}
           value={checkboxStates.supervisor}
+        />
+      ),
+    },
+    {
+      key: "8",
+      label: "میزان پیشرفت",
+      children: (
+        <Slider
+          range
+          defaultValue={[0, 100]}
+          onChangeComplete={(value) => onChange("progress", value.join(","))}
+          // onChange={}
         />
       ),
     },

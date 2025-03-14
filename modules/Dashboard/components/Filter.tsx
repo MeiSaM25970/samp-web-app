@@ -1,5 +1,5 @@
 "use client";
-import { Checkbox, Collapse, CollapseProps, Divider, Flex } from "antd";
+import { Checkbox, Collapse, CollapseProps, Divider, Flex, Slider } from "antd";
 import { Dispatch, FC, SetStateAction } from "react";
 import { FilterContainer } from "../styles/Filter.style";
 import Icons from "espil-icons";
@@ -124,6 +124,20 @@ export const Filter: FC<IProps> = ({ setFilter }) => {
           options={options?.supervisor}
           className="checkBoxGroup"
           onChange={(value) => onChange("supervisor", value)}
+        />
+      ),
+    },
+    {
+      key: "8",
+      label: "میزان پیشرفت",
+      children: (
+        <Slider
+          range
+          defaultValue={[0, 100]}
+          onChangeComplete={(value) => {
+            if (value.join(",") === "0,100") onChange("progress", "");
+            else onChange("progress", value.join(","));
+          }}
         />
       ),
     },

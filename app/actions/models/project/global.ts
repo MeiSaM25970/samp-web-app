@@ -6,4 +6,5 @@ export interface IGetProjectArg {
   province?: string;
   executeState?: string;
   supervisor?: string;
+  progress?: string;
 }

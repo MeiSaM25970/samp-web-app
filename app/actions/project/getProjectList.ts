@@ -26,6 +26,7 @@ export async function getProjectList(
       province,
       executeState,
       supervisor,
+      progress,
     } = data || {};
     const db = await connectDB();
     const result = await db
@@ -38,7 +39,8 @@ export async function getProjectList(
       .input("Prj_TechnicalType", sql.NVarChar, technicalType || "")
       .input("Prj_Province", sql.NVarChar, province || "")
       .input("Prj_ExecuteState", sql.NVarChar, executeState || "")
-      .input("Prj_Supervisor", sql.NVarChar, supervisor || "")
+      .input("prj_Supervisor", sql.NVarChar, supervisor || "")
+      .input("prj_Progress", sql.NVarChar, progress || "")
       .execute("PMO_ProjectList");
     if (!result || !result?.recordset) {
       return { success: false, error: "unknown error" };
