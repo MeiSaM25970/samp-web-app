@@ -10,6 +10,7 @@ import { useQuery } from "@tanstack/react-query";
 import { queryKeys } from "@/constants/queryKeys";
 import { IGetProjectArg } from "@/app/actions/models";
 import { fetchFilterOptions } from "../getData";
+import Image from "next/image";
 
 interface IProps {
   setFilter: Dispatch<SetStateAction<IGetProjectArg | undefined>>;
@@ -71,10 +72,26 @@ export const Filter: FC<IProps> = ({ setFilter }) => {
       label: "زیر عرصه",
       children: (
         <Checkbox.Group
-          options={options?.subjectType}
           className="checkBoxGroup"
           onChange={(value) => onChange("subjectType", value)}
-        />
+        >
+          {options?.subjectType.map((i, key) => (
+            <Flex gap={8} key={key} justify="space-between" align="center">
+              <Checkbox value={i.value}>
+                <span>{i.label}</span>
+              </Checkbox>
+              <span style={{ width: 24, height: 24 }}>
+                <Image
+                  src={i.imgUrl}
+                  width={24}
+                  height={24}
+                  alt="icon"
+                  style={{ borderRadius: 4 }}
+                />
+              </span>
+            </Flex>
+          ))}
+        </Checkbox.Group>
       ),
     },
     {

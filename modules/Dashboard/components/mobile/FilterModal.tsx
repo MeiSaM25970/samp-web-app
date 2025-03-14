@@ -10,6 +10,7 @@ import { useQuery } from "@tanstack/react-query";
 import { queryKeys } from "@/constants/queryKeys";
 import { fetchFilterOptions } from "../../getData";
 import _ from "lodash";
+import Image from "next/image";
 
 export const FilterModalMobile: FC = () => {
   const { showFilter, setShowFilter, setFilter } = useDashboard();
@@ -111,11 +112,26 @@ export const FilterModalMobile: FC = () => {
       label: "زیر عرصه",
       children: (
         <Checkbox.Group
-          options={options?.subjectType}
           className="checkBoxGroup"
           onChange={(value) => onChange("subjectType", value)}
-          value={checkboxStates.subjectType}
-        />
+        >
+          {options?.subjectType.map((i, key) => (
+            <Flex gap={8} key={key} justify="space-between" align="center">
+              <Checkbox value={i.value}>
+                <span>{i.label}</span>
+              </Checkbox>
+              <span style={{ width: 24, height: 24 }}>
+                <Image
+                  src={i.imgUrl}
+                  width={24}
+                  height={24}
+                  alt="icon"
+                  style={{ borderRadius: 4 }}
+                />
+              </span>
+            </Flex>
+          ))}
+        </Checkbox.Group>
       ),
     },
     {
