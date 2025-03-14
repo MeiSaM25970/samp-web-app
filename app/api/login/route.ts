@@ -109,7 +109,6 @@ export async function POST(req: Request) {
       );
     }
     const user = result.recordset[0];
-    console.log({ user });
     const token = await createJWT({
       id: user.UserID,
       username,
