@@ -11,7 +11,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ProjectCardMobile } from "./Card";
 
 export const ProjectListMobile: FC = () => {
-  const { projectList, loading, filter, setShowFilter } = useDashboard();
+  const { projectList, loading, filter, setShowFilter, search, setSearch } =
+    useDashboard();
   const [showInput, setShowInput] = useState<boolean>(false);
 
   const inputRef = useRef<InputRef>(null);
@@ -90,6 +91,8 @@ export const ProjectListMobile: FC = () => {
                       border: 0,
                       background: colors.background.baseBg,
                     }}
+                    value={search}
+                    onChange={(event) => setSearch(event.target.value)}
                   />
                 </motion.div>
               )}
