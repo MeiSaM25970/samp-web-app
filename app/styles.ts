@@ -1,5 +1,7 @@
 "use client";
-import styled from "styled-components";
+import { breakPointsMd } from "@/constants/screen";
+import { Row } from "antd";
+import styled, { keyframes } from "styled-components";
 
 export const BodyWrapper = styled.body`
   overflow-x: hidden;
