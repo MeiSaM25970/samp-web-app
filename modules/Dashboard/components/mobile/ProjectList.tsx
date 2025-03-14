@@ -50,7 +50,7 @@ export const ProjectListMobile: FC = () => {
   );
   useEffect(() => {
     setCurrentPage(1);
-  }, [filter]);
+  }, [filter, data, search]);
   useEffect(() => {
     if (showInput && inputRef.current) {
       inputRef.current.focus();

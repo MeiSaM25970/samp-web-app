@@ -45,7 +45,7 @@ export const ProjectList: FC = () => {
   );
   useEffect(() => {
     setCurrentPage(1);
-  }, [filter, data]);
+  }, [filter, data, search]);
   useEffect(() => {
     const params = searchParams.get("view");
     if (params && params === "table") {
