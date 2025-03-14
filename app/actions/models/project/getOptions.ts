@@ -5,7 +5,7 @@ interface IOption {
 export interface IFilterOptions {
   planGroups: IOption[];
   areaType: IOption[];
-  subjectType: IOption[];
+  subjectType: (IOption & { imgUrl: string })[];
   technicalType: IOption[];
   province: IOption[];
   executeState: IOption[];

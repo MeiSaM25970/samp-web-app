@@ -69,6 +69,9 @@ export async function getFilterOptions(): Promise<IResponse> {
           ?.map((i) => ({
             label: i.Pst_Name,
             value: Number(i.Pst_ID),
+            imgUrl: `data:image/png;base64,${i.Pst_PlaceMarker.toString(
+              "base64"
+            )}`,
           }))
           .filter((i) => i.value !== 0) || [],
       technicalType:

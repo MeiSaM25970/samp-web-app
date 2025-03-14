@@ -18,6 +18,7 @@ import {
 } from "@/components/UiKit/Typography";
 import { useTheme } from "@/app/theme";
 import Icons from "espil-icons";
+import { useDashboard } from "../context";
 
 interface IProps {
   project: IProject | undefined;
@@ -27,6 +28,7 @@ export const ProjectCard: FC<IProps> = ({ project }) => {
   const {
     theme: { colors },
   } = useTheme();
+  const { setProjectId } = useDashboard();
   return (
     <CardContainer>
       <Col span={4} className="pl-[40px] ">
@@ -228,7 +230,7 @@ export const ProjectCard: FC<IProps> = ({ project }) => {
                   <Col span={12}>
                     <Flex gap={16} className="grayHolder">
                       <C4 style={{ color: colors.text.secondaryText }}>
-                        اعتبار مصوب{" "}
+                        اعتبار مصوب
                       </C4>
                       <div className="rectHolder"></div>
                       <C1 style={{ color: colors.text.primaryText }}>
@@ -244,7 +246,7 @@ export const ProjectCard: FC<IProps> = ({ project }) => {
                   <Col span={12}>
                     <Flex gap={16} className="grayHolder">
                       <C4 style={{ color: colors.text.secondaryText }}>
-                        صورت وضعیت{" "}
+                        صورت وضعیت
                       </C4>
                       <div className="rectHolder"></div>
                       <C1 style={{ color: colors.text.primaryText }}>
@@ -278,6 +280,9 @@ export const ProjectCard: FC<IProps> = ({ project }) => {
                   color="primary"
                   variant="link"
                   className="flex justify-center items-center"
+                  onClick={() => {
+                    setProjectId(project?.Prj_ID);
+                  }}
                 >
                   <span>بیشتر</span>
                   <Icons

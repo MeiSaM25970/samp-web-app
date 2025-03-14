@@ -4,17 +4,35 @@ import { AllProjectsDetails } from "./components/AllProjectDetails";
 import { ProjectList } from "./components/ProjectList";
 import { Col, Row } from "antd";
 import { useDashboard } from "./context";
+import { breakPointsMd } from "@/constants/screen";
+import { AllProjectsDetailsMobile } from "./components/mobile/AllProjectDetail";
+import { useMediaQuery } from "react-responsive";
+import { ProjectListMobile } from "./components/mobile/ProjectList";
 
 const Dashboard: FC = () => {
   const { projectDetails, loading } = useDashboard();
+  const isMobile = !useMediaQuery({ minWidth: breakPointsMd });
+
   return (
     <Row>
       <Col span={24}>
-        <AllProjectsDetails
-          projectDetails={projectDetails}
-          projectDetailsLoading={loading}
-        />
-        <ProjectList />
+        {isMobile ? (
+          <>
+            <AllProjectsDetailsMobile
+              projectDetails={projectDetails}
+              projectDetailsLoading={loading}
+            />
+            <ProjectListMobile />
+          </>
+        ) : (
+          <>
+            <AllProjectsDetails
+              projectDetails={projectDetails}
+              projectDetailsLoading={loading}
+            />
+            <ProjectList />
+          </>
+        )}
       </Col>
     </Row>
   );

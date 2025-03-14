@@ -1,4 +1,5 @@
 "use client";
+import { breakPointsMd } from "@/constants/screen";
 import { Row } from "antd";
 import styled from "styled-components";
 
@@ -34,5 +35,10 @@ export const CardContainer = styled(Row)`
     height: 40px;
     align-items: center;
     line-height: 32px;
+  }
+  @media only screen and (max-width: ${breakPointsMd}px) {
+    .grayHolder {
+      height: auto;
+    }
   }
 `;

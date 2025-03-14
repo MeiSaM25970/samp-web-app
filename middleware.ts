@@ -31,7 +31,7 @@ export default async function middleware(req: NextRequest) {
 
   // 5. Redirect to /dashboard if the user is authenticated
   if (isPublicRoute && session?.id) {
-    return NextResponse.redirect(new URL("/dashboard", req.nextUrl));
+    return NextResponse.redirect(new URL("/", req.nextUrl));
   }
   if (isPublicRoute && !session) {
     const response = NextResponse.next();
@@ -41,9 +41,9 @@ export default async function middleware(req: NextRequest) {
     });
     return response;
   }
-  if (path === "/") {
-    return NextResponse.redirect(new URL("/dashboard", req.nextUrl));
-  }
+  // if (path === "/") {
+  //   return NextResponse.redirect(new URL("/dashboard", req.nextUrl));
+  // }
   return NextResponse.next();
 }
 

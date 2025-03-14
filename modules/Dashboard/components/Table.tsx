@@ -1,10 +1,11 @@
+"use client";
 import { IProject } from "@/app/actions/models";
 import { Col, Row, Table, TableProps } from "antd";
 import { FC } from "react";
 import { useDashboard } from "../context";
 
 export const ProjectTable: FC = () => {
-  const { projectList, loading } = useDashboard();
+  const { projectList, loading, setProjectId } = useDashboard();
   const columns: TableProps<IProject>["columns"] = [
     {
       title: "#",
@@ -67,6 +68,12 @@ export const ProjectTable: FC = () => {
           columns={columns}
           dataSource={projectList}
           loading={loading}
+          onRow={(record) => ({
+            onClick: () => {
+              setProjectId(record?.Prj_ID);
+            },
+            className: "cursor-pointer select-none",
+          })}
           pagination={{
             position: ["bottomCenter"],
             showSizeChanger: true,

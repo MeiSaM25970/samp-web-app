@@ -54,10 +54,7 @@ export async function getMapProjectList(
       db?.request().query("SELECT * FROM Pmo_Map"),
       db?.request().query("SELECT * FROM Pmo__SubjectType"),
     ]);
-    // const maps: IMap[] = await db
-    //   ?.request()
-    //   .query("SELECT * FROM Pmo_Map")
-    //   .then((res) => res.recordset);
+
     const [maps, mapSubjectType] = results.map((result) =>
       result.status === "fulfilled" ? result.value.recordset : null
     );
