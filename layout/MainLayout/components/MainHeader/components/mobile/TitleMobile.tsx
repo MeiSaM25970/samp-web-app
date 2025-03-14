@@ -1,7 +1,9 @@
 "use client";
 import { useTheme } from "@/app/theme";
+import { ROUTES } from "@/constants/Routes";
 import { Flex } from "antd";
 import Icons from "espil-icons";
+import Link from "next/link";
 import { FC } from "react";
 interface IProps {
   hasNotifications?: boolean;
@@ -13,7 +15,9 @@ export const HeaderTitleMobile: FC<IProps> = ({ hasNotifications = true }) => {
 
   return (
     <Flex gap={16} align="center">
-      <span className="samp">SAMP</span>
+      <Link href={ROUTES.home}>
+        <span className="samp">SAMP</span>
+      </Link>
       {hasNotifications && (
         <div
           style={{

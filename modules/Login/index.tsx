@@ -26,7 +26,7 @@ export const Login: FC = () => {
       const { token, error } = await loginAction(values);
       if (error) return fireError("خطا", error);
       if (token) {
-        router.replace("/dashboard");
+        router.replace("/");
         return;
       }
       return token;
