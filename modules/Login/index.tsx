@@ -64,14 +64,14 @@ export const Login: FC = () => {
                   label="نام کاربری"
                   rules={[{ required: true }]}
                 >
-                  <UserNameUikit />
+                  <UserNameUikit onPressEnter={form.submit} />
                 </FormItem>
                 <FormItem
                   name={"password"}
                   label="رمز عبور"
                   rules={[{ required: true }]}
                 >
-                  <PasswordUikit />
+                  <PasswordUikit onPressEnter={form.submit} />
                 </FormItem>
               </Flex>
             </Col>
