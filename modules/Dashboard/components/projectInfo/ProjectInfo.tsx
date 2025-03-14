@@ -4,25 +4,21 @@ import { Col, Flex, Progress, Tabs, TabsProps } from "antd";
 import { IProjectById } from "@/app/actions/models";
 import { C2, C3, C4, C5, C8, C9, T5, T6 } from "@/components/UiKit/Typography";
 import { useTheme } from "@/app/theme";
-import { MapProjectInfoContainer } from "../styles/MapProjectInfo.style";
 import { Etebarha } from "./Etebarha";
-import Icons from "espil-icons";
-import { useMediaQuery } from "react-responsive";
-import { breakPointsMd } from "@/constants/screen";
 import { useQuery } from "@tanstack/react-query";
-import { fetchProjectFiles } from "../getData";
+import { fetchProjectFiles } from "../../getData";
 import { FilesComponent } from "./Files";
+import { ProjectInfoContainer } from "../../styles/ProjectInfo.style";
+import MapProject from "./Map";
 
 interface IProps {
   project: IProjectById | undefined;
-  onClose: () => void;
 }
 
-export const MapProjectInfo: FC<IProps> = ({ project, onClose }) => {
+export const ProjectInfo: FC<IProps> = ({ project }) => {
   const {
     theme: { colors },
   } = useTheme();
-  const isMobile = useMediaQuery({ maxWidth: breakPointsMd });
   const { data: projectFile, isLoading } = useQuery({
     queryKey: ["fetchProjectFiles"],
     enabled: !!project,
@@ -74,15 +70,20 @@ export const MapProjectInfo: FC<IProps> = ({ project, onClose }) => {
         <FilesComponent projectFiles={projectFile} loading={isLoading} />
       ),
     },
+    {
+      key: "4",
+      label: "نقشه",
+      children: <MapProject project={project} />,
+    },
   ];
   return (
-    <MapProjectInfoContainer>
+    <ProjectInfoContainer>
       <Col span={24}>
         <Flex justify="space-between" className="w-full" align="center">
           <T6 style={{ color: colors.text.secondaryText }}>
             {project?.Prj_ID}
           </T6>
-          <Flex gap={8} align="center" className={isMobile ? "!pe-[32px]" : ""}>
+          <Flex gap={8} align="center" className={"!pe-[32px]"}>
             <C9
               className="statusHolder"
               style={{
@@ -102,14 +103,6 @@ export const MapProjectInfo: FC<IProps> = ({ project, onClose }) => {
             >
               {project?.ExecuteState}
             </C9>
-            {!isMobile && (
-              <Icons
-                name="Close"
-                color={colors.icon.icDef}
-                onClick={onClose}
-                className="cursor-pointer"
-              />
-            )}
           </Flex>
         </Flex>
       </Col>
@@ -249,6 +242,6 @@ export const MapProjectInfo: FC<IProps> = ({ project, onClose }) => {
       <Col span={24} className="pt-[24px]">
         <Tabs defaultActiveKey="1" items={items} centered />
       </Col>
-    </MapProjectInfoContainer>
+    </ProjectInfoContainer>
   );
 };

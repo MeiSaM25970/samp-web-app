@@ -11,7 +11,8 @@ export const fetchProjectDetails = async (filterData?: IGetProjectArg) => {
   return { projectDetails, mapProjectList };
 };
 export const fetchProjectFiles = async (projectId: string | undefined) => {
-  const { data: projectFiles } = await getProjectFiles("25800");
+  if (!projectId) return undefined;
+  const { data: projectFiles } = await getProjectFiles(projectId);
   return projectFiles || [];
 };
 export const fetchProjectById = async (projectId: string | undefined) => {

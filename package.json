@@ -24,6 +24,7 @@
     "jose": "^6.0.8",
     "jsonwebtoken": "^9.0.2",
     "lodash": "^4.17.21",
+    "mime": "^4.0.6",
     "moment-jalaali": "^0.10.4",
     "mssql": "^11.0.1",
     "next": "^14",

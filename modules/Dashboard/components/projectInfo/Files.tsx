@@ -2,7 +2,7 @@
 import { IProjectFile } from "@/app/actions/models/project/getProjectFiles";
 import { Flex, Image, Spin } from "antd";
 import { FC, useState } from "react";
-import { FilesContainer } from "../styles/files.style";
+import { FilesContainer } from "../../styles/files.style";
 import { C7, C8 } from "@/components/UiKit/Typography";
 import Icons from "espil-icons";
 import { useTheme } from "@/app/theme";

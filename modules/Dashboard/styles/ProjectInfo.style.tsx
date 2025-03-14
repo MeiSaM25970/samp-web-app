@@ -1,9 +1,8 @@
 "use client";
-import { breakPointsMd } from "@/constants/screen";
 import { Row } from "antd";
 import styled from "styled-components";
 
-export const CardContainer = styled(Row)`
+export const ProjectInfoContainer = styled(Row)`
   padding: 16px;
   align-self: stretch;
   border-radius: 16px;
@@ -32,13 +31,21 @@ export const CardContainer = styled(Row)`
     padding: 4px 12px;
     border-radius: 8px;
     background: ${({ theme }) => theme.colors.project.priceBG};
-    height: 40px;
     align-items: center;
-    line-height: 32px;
   }
-  @media only screen and (max-width: ${breakPointsMd}px) {
-    .grayHolder {
-      height: auto;
-    }
+  .ant-tabs-content-holder {
+    margin-top: 24px;
+  }
+  .projectProgress {
+    width: 100%;
+    display: flex;
+    padding: 4px 12px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+    align-self: stretch;
+    border-radius: 8px;
+    background: var(--Project-PriceBG, #eee);
   }
 `;

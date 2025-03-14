@@ -22,6 +22,7 @@ export const ProjectList: FC = () => {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [pageSize, setPageSize] = useState<number>(10);
   const [showTable, setShowTable] = useState<boolean>(false);
+
   const handlePageChange = (page: number, pageSize: number) => {
     window.scrollTo({ top: 0, behavior: "smooth" });
     setPageSize(pageSize);

@@ -6,7 +6,7 @@ export const BodyWrapper = styled.body`
   padding: 0;
   margin: 0;
   min-height: 100dvh;
-
+  width: 100% !important;
   .ant-table-wrapper
     .ant-table-ping-right:not(.ant-table-has-fix-right)
     .ant-table-container::after {

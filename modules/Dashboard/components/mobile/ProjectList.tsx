@@ -13,6 +13,7 @@ import { ProjectCardMobile } from "./Card";
 export const ProjectListMobile: FC = () => {
   const { projectList, loading, filter, setShowFilter } = useDashboard();
   const [showInput, setShowInput] = useState<boolean>(false);
+
   const inputRef = useRef<InputRef>(null);
   const data = useMemo(() => {
     if (projectList) return [...projectList];

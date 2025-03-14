@@ -1,7 +1,12 @@
 "use client";
-import { IGetProjectArg, IProject, IProjectDetail } from "@/app/actions/models";
+import {
+  IGetProjectArg,
+  IProject,
+  IProjectById,
+  IProjectDetail,
+} from "@/app/actions/models";
 import { queryKeys } from "@/constants/queryKeys";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import {
   createContext,
   Dispatch,
@@ -9,9 +14,14 @@ import {
   PropsWithChildren,
   SetStateAction,
   useContext,
+  useEffect,
   useState,
 } from "react";
-import { getProject } from "./getData";
+import { fetchProjectById, getProject } from "./getData";
+import { Flex, Modal, Spin } from "antd";
+import { ProjectInfo } from "./components/projectInfo/ProjectInfo";
+import { useMediaQuery } from "react-responsive";
+import { breakPointsMd } from "@/constants/screen";
 
 interface IContext {
   projectList: IProject[] | undefined;
@@ -19,6 +29,8 @@ interface IContext {
   filter: IGetProjectArg | undefined;
   loading: boolean;
   showFilter: boolean;
+  projectId: string | undefined;
+  setProjectId: Dispatch<SetStateAction<string | undefined>>;
   setFilter: Dispatch<SetStateAction<IGetProjectArg | undefined>>;
   setShowFilter: Dispatch<SetStateAction<boolean>>;
 }
@@ -27,6 +39,9 @@ export const DashboardContext = createContext<IContext | undefined>(undefined);
 export const DashboardProvider: FC<PropsWithChildren> = ({ children }) => {
   const [filter, setFilter] = useState<IGetProjectArg>();
   const [showFilter, setShowFilter] = useState<boolean>(false);
+  const [projectId, setProjectId] = useState<string | undefined>();
+  const [project, setProject] = useState<IProjectById | undefined>();
+  const isMobile = useMediaQuery({ maxWidth: breakPointsMd });
 
   const get = async () => {
     const { projectDetails, projectList } = await getProject(filter);
@@ -39,18 +54,52 @@ export const DashboardProvider: FC<PropsWithChildren> = ({ children }) => {
     queryKey: [queryKeys.getProjectList, filter],
     queryFn: get,
   });
-
+  const { mutate: getById, isPending: getByIdLoading } = useMutation({
+    mutationFn: async (id: string) => {
+      return await fetchProjectById(id);
+    },
+    onSuccess: (data) => {
+      setProject(data);
+    },
+  });
+  useEffect(() => {
+    if (projectId) {
+      getById(projectId);
+    } else {
+      setProject(undefined);
+    }
+  }, [getById, projectId]);
   const contextValue: IContext = {
     filter,
     projectDetails: data?.projectDetails,
     projectList: data?.projectList,
     loading: isLoading,
+    projectId,
+    setProjectId,
     setFilter,
     setShowFilter,
     showFilter,
   };
   return (
     <DashboardContext.Provider value={contextValue}>
+      <Modal
+        open={!!projectId}
+        onCancel={() => {
+          setProject(undefined);
+          setProjectId(undefined);
+        }}
+        footer={null}
+        style={{ top: 8 }}
+        width={isMobile ? "auto" : "50%"}
+      >
+        {getByIdLoading ? (
+          <Flex justify="center" align="center" className="h-[300px]">
+            <Spin size="small" />
+          </Flex>
+        ) : (
+          <ProjectInfo project={project} />
+        )}
+      </Modal>
       {children}
     </DashboardContext.Provider>
   );

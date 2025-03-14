@@ -1,11 +1,12 @@
 "use client";
-import { FC } from "react";
-import { Button, Col, Divider, Flex, Progress } from "antd";
+import { FC, useState } from "react";
+import { Button, Col, Divider, Flex, Progress, Row } from "antd";
 import { IProject } from "@/app/actions/models";
-import { C5, C6, C7, C8, C9, T6 } from "@/components/UiKit/Typography";
+import { C1, C4, C5, C6, C7, C8, C9, T6 } from "@/components/UiKit/Typography";
 import { useTheme } from "@/app/theme";
 import Icons from "espil-icons";
 import { CardContainer } from "../../styles/card.style";
+import { useDashboard } from "../../context";
 
 interface IProps {
   project: IProject | undefined;
@@ -15,6 +16,8 @@ export const ProjectCardMobile: FC<IProps> = ({ project }) => {
   const {
     theme: { colors },
   } = useTheme();
+  const [showMore, setShowMore] = useState<boolean>(false);
+  const { setProjectId } = useDashboard();
   return (
     <CardContainer gutter={[0, 24]}>
       <Col span={24}>
@@ -183,6 +186,87 @@ export const ProjectCardMobile: FC<IProps> = ({ project }) => {
           </Flex>
         </Flex>
       </Col>
+      <Col
+        span={24}
+        style={{
+          maxHeight: showMore ? "500px" : "0px", // مقدار حداکثر ارتفاع
+          transition: "max-height 0.3s ease-in-out", // انیمیشن نرم
+          overflow: "hidden",
+        }}
+      >
+        <Row align={"bottom"} className="pt-[8px]">
+          <Col span={24}>
+            <Row gutter={[0, 12]}>
+              <Col span={24}>
+                <Flex gap={4} className="grayHolder" vertical>
+                  <C4 style={{ color: colors.text.secondaryText }}>
+                    اعتبار پیش بینی شده
+                  </C4>
+                  <Flex gap={16}>
+                    <C1 style={{ color: colors.text.primaryText }}>
+                      {project && project?.Prj_TotalCredit !== undefined
+                        ? Number(project?.Prj_TotalCredit).toLocaleString(
+                            "fa-IR"
+                          )
+                        : "--"}
+                    </C1>
+                    <C7 style={{ color: colors.text.secondaryText }}>ریال</C7>
+                  </Flex>
+                </Flex>
+              </Col>
+              <Col span={24}>
+                <Flex gap={4} className="grayHolder" vertical>
+                  <C4 style={{ color: colors.text.secondaryText }}>
+                    اعتبار مصوب
+                  </C4>
+                  <Flex gap={16}>
+                    <C1 style={{ color: colors.text.primaryText }}>
+                      {project && project?.CreditAllocation !== undefined
+                        ? Number(project?.CreditAllocation).toLocaleString(
+                            "fa-IR"
+                          )
+                        : "--"}
+                    </C1>
+                    <C7 style={{ color: colors.text.secondaryText }}>ریال</C7>
+                  </Flex>
+                </Flex>
+              </Col>
+              <Col span={24}>
+                <Flex gap={4} className="grayHolder" vertical>
+                  <C4 style={{ color: colors.text.secondaryText }}>
+                    صورت وضعیت
+                  </C4>
+                  <Flex gap={16}>
+                    <C1 style={{ color: colors.text.primaryText }}>
+                      {project && project?.Prj_TotalCredit !== undefined
+                        ? Number(project?.Prj_TotalCredit).toLocaleString(
+                            "fa-IR"
+                          )
+                        : "--"}
+                    </C1>
+                    <C7 style={{ color: colors.text.secondaryText }}>ریال</C7>
+                  </Flex>
+                </Flex>
+              </Col>
+              <Col span={24}>
+                <Flex gap={4} className="grayHolder" vertical>
+                  <C4 style={{ color: colors.text.secondaryText }}>
+                    صورت وضعیت تایید شده
+                  </C4>
+                  <Flex gap={16}>
+                    <C1 style={{ color: colors.text.primaryText }}>
+                      {project && project?.Cust !== undefined
+                        ? Number(project?.Cust).toLocaleString("fa-IR")
+                        : "--"}
+                    </C1>
+                    <C7 style={{ color: colors.text.secondaryText }}>ریال</C7>
+                  </Flex>
+                </Flex>
+              </Col>
+            </Row>
+          </Col>
+        </Row>
+      </Col>
       <Divider className="!m-0" />
       <Col span={24}>
         <Flex justify="space-between">
@@ -190,14 +274,22 @@ export const ProjectCardMobile: FC<IProps> = ({ project }) => {
             color="primary"
             variant="link"
             className="flex justify-center items-center !min-w-[76px]"
+            onClick={() => setShowMore((prev) => !prev)}
           >
-            <Icons color={colors.icon.icPri} name="MaximizeSquare" size={24} />
+            <Icons
+              color={colors.icon.icPri}
+              name={showMore ? "MinimizeSquare" : "MaximizeSquare"}
+              size={24}
+            />
             <span>اعتبارها</span>
           </Button>
           <Button
             color="primary"
             variant="link"
             className="flex justify-center items-center !min-w-[76px]"
+            onClick={() => {
+              setProjectId(project?.Prj_ID);
+            }}
           >
             <span>بیشتر</span>
             <Icons color={colors.icon.icPri} name="BackSingleColor" size={24} />
