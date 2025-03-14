@@ -98,7 +98,7 @@ export async function getFilterOptions(): Promise<IResponse> {
       supervisor:
         supervisor
           ?.map((i) => ({
-            label: i.User_Name,
+            label: i.User_FullName,
             value: Number(i.User_ID),
           }))
           .filter((i) => i.value !== 0) || [],
