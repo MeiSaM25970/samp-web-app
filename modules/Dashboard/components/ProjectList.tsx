@@ -11,6 +11,7 @@ import { useTheme } from "@/app/theme";
 import { ProjectTable } from "./Table";
 import { useSearchParams } from "next/navigation";
 import { InputUikit } from "@/components/UiKit/Inputs";
+import Image from "next/image";
 
 export const ProjectList: FC = () => {
   const { projectList, loading, filter, setFilter, search, setSearch } =
@@ -74,7 +75,16 @@ export const ProjectList: FC = () => {
                   setShowTable((prev) => !prev);
                 }}
               >
-                <Icons name="Table" />
+                {showTable ? (
+                  <Image
+                    src={"/images/card.svg"}
+                    alt="card"
+                    width={24}
+                    height={24}
+                  />
+                ) : (
+                  <Icons name={"Table"} />
+                )}
               </span>
               <InputUikit
                 placeholder="جستجوی کد و عنوان پروژه"

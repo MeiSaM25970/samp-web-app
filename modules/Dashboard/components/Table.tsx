@@ -1,6 +1,6 @@
 "use client";
 import { IProject } from "@/app/actions/models";
-import { Col, Row, Table, TableProps } from "antd";
+import { Col, Progress, Row, Table, TableProps } from "antd";
 import { FC } from "react";
 import { useDashboard } from "../context";
 
@@ -24,12 +24,12 @@ export const ProjectTable: FC = () => {
       width: "20%",
     },
     {
-      title: "گروه طرح",
+      title: "عرصه",
       dataIndex: "PlanGroup",
       key: "PlanGroup",
     },
     {
-      title: "دسته بندی موضوعی",
+      title: "زیر عرصه",
       dataIndex: "SubjectType",
       key: "SubjectType",
     },
@@ -39,9 +39,9 @@ export const ProjectTable: FC = () => {
       key: "TechnicalType",
     },
     {
-      title: "شیوه اجرا",
-      dataIndex: "Unit",
-      key: "Unit",
+      title: "استان",
+      dataIndex: "Province",
+      key: "Province",
     },
     {
       title: "اعتبار کل",
@@ -53,7 +53,8 @@ export const ProjectTable: FC = () => {
       title: "پیشرفت",
       dataIndex: "PhisicalProgress",
       key: "PhisicalProgress",
-      render: (text) => text?.toString() + "%",
+      width: 110,
+      render: (text) => <Progress percent={text} />,
     },
     {
       title: "تاریخ شروع",
