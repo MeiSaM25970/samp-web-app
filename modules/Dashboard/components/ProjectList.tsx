@@ -51,7 +51,6 @@ export const ProjectList: FC = () => {
       setShowTable(true);
     } else setShowTable(false);
   }, [searchParams]);
-  console.log({ currentData });
   return (
     <ProjectListContainer className="mt-[12px]">
       <Col span={4}>
