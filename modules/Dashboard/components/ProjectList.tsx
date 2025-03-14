@@ -9,6 +9,7 @@ import { C8 } from "@/components/UiKit/Typography";
 import Icons from "espil-icons";
 import { useTheme } from "@/app/theme";
 import { ProjectTable } from "./Table";
+import { useSearchParams } from "next/navigation";
 
 export const ProjectList: FC = () => {
   const { projectList, loading, filter, setFilter } = useDashboard();
@@ -22,7 +23,7 @@ export const ProjectList: FC = () => {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [pageSize, setPageSize] = useState<number>(10);
   const [showTable, setShowTable] = useState<boolean>(false);
-
+  const searchParams = useSearchParams();
   const handlePageChange = (page: number, pageSize: number) => {
     window.scrollTo({ top: 0, behavior: "smooth" });
     setPageSize(pageSize);
@@ -41,6 +42,12 @@ export const ProjectList: FC = () => {
   useEffect(() => {
     setCurrentPage(1);
   }, [filter]);
+  useEffect(() => {
+    const params = searchParams.get("view");
+    if (params && params === "table") {
+      setShowTable(true);
+    } else setShowTable(false);
+  }, [searchParams]);
   return (
     <ProjectListContainer className="mt-[12px]">
       <Col span={4}>

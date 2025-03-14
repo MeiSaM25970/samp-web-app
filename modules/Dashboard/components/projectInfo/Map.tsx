@@ -34,10 +34,9 @@ const MapProject: React.FC<IProps> = ({ project }) => {
   useEffect(() => {
     getMarker();
   }, [getMarker]);
-  console.log({ marker, location });
   if (!marker || !project) return null;
   return (
-    <MapWrapper center={location} zoom={10}>
+    <MapWrapper center={location} zoom={12}>
       <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
       <LocationMarker location={location} marker={marker} />
     </MapWrapper>
