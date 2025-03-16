@@ -242,6 +242,8 @@ export const useOverride = () => {
         fontSizeSM: 12,
         borderRadius: 8,
         headerBorderRadius: 8,
+        headerSortHoverBg: colors.table.bg.headerDef,
+        headerSortActiveBg: colors.table.bg.headerDef,
       },
       Pagination: {
         itemActiveBg: "transparent",

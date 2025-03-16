@@ -23,6 +23,8 @@ interface IContext {
   loading: boolean;
   mapProjectList: IMapProject[] | undefined;
   showFilter: boolean;
+  currentProjectImage: string | undefined;
+  setCurrentProjectImage: Dispatch<SetStateAction<string | undefined>>;
   setShowFilter: Dispatch<SetStateAction<boolean>>;
   setFilter: Dispatch<SetStateAction<IGetProjectArg | undefined>>;
 }
@@ -31,6 +33,7 @@ export const MapContext = createContext<IContext | undefined>(undefined);
 export const MapProvider: FC<PropsWithChildren> = ({ children }) => {
   const [filter, setFilter] = useState<IGetProjectArg>();
   const [showFilter, setShowFilter] = useState<boolean>(false);
+  const [currentProjectImage, setCurrentProjectImage] = useState<string>();
 
   const get = async () => {
     const { projectDetails, mapProjectList } = await fetchProjectDetails(
@@ -53,6 +56,8 @@ export const MapProvider: FC<PropsWithChildren> = ({ children }) => {
     loading: isLoading,
     mapProjectList: data?.mapProjectList,
     showFilter,
+    currentProjectImage,
+    setCurrentProjectImage,
     setShowFilter,
     setFilter,
   };

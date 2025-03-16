@@ -10,6 +10,7 @@ import { fetchProjectFiles } from "../../getData";
 import { FilesComponent } from "./Files";
 import { ProjectInfoContainer } from "../../styles/ProjectInfo.style";
 import MapProject from "./Map";
+import { useDashboard } from "../../context";
 
 interface IProps {
   project: IProjectById | undefined;
@@ -27,7 +28,7 @@ export const ProjectInfo: FC<IProps> = ({ project }) => {
       if (res) return res;
     },
   });
-
+  const { currentProjectImage } = useDashboard();
   const items: TabsProps["items"] = [
     {
       key: "1",
@@ -112,7 +113,9 @@ export const ProjectInfo: FC<IProps> = ({ project }) => {
             style={{
               width: 50,
               height: 50,
-              background: "url(/images/project.png)",
+              background: `url(${
+                (currentProjectImage as string) || "/images/defaultImage.svg"
+              })`,
               backgroundPosition: "center",
               backgroundSize: "cover",
               position: "relative",

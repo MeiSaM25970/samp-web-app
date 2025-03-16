@@ -17,7 +17,7 @@ export const ProjectCardMobile: FC<IProps> = ({ project }) => {
     theme: { colors },
   } = useTheme();
   const [showMore, setShowMore] = useState<boolean>(false);
-  const { setProjectId } = useDashboard();
+  const { setProjectId, setCurrentProjectImage } = useDashboard();
   return (
     <CardContainer gutter={[0, 24]}>
       <Col span={24}>
@@ -52,7 +52,10 @@ export const ProjectCardMobile: FC<IProps> = ({ project }) => {
               style={{
                 width: 50,
                 height: 50,
-                background: "url(/images/project.png)",
+                background: `url(${
+                  (project?.Image_Default as string) ||
+                  "/images/defaultImage.svg"
+                })`,
                 backgroundPosition: "center",
                 backgroundSize: "cover",
                 position: "relative",
@@ -302,6 +305,9 @@ export const ProjectCardMobile: FC<IProps> = ({ project }) => {
             className="flex justify-center items-center !min-w-[76px]"
             onClick={() => {
               setProjectId(project?.Prj_ID);
+              setCurrentProjectImage(
+                project?.Image_Default as string | undefined
+              );
             }}
           >
             <span>بیشتر</span>

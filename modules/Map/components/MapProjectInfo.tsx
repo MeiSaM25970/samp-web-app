@@ -12,6 +12,7 @@ import { breakPointsMd } from "@/constants/screen";
 import { useQuery } from "@tanstack/react-query";
 import { fetchProjectFiles } from "../getData";
 import { FilesComponent } from "./Files";
+import { useMap } from "../context";
 
 interface IProps {
   project: IProjectById | undefined;
@@ -31,7 +32,7 @@ export const MapProjectInfo: FC<IProps> = ({ project, onClose }) => {
       if (res) return res;
     },
   });
-
+  const { currentProjectImage, setCurrentProjectImage } = useMap();
   const items: TabsProps["items"] = [
     {
       key: "1",
@@ -106,7 +107,10 @@ export const MapProjectInfo: FC<IProps> = ({ project, onClose }) => {
               <Icons
                 name="Close"
                 color={colors.icon.icDef}
-                onClick={onClose}
+                onClick={() => {
+                  onClose();
+                  setCurrentProjectImage(undefined);
+                }}
                 className="cursor-pointer"
               />
             )}
@@ -119,7 +123,9 @@ export const MapProjectInfo: FC<IProps> = ({ project, onClose }) => {
             style={{
               width: 50,
               height: 50,
-              background: "url(/images/project.png)",
+              background: `url(${
+                (currentProjectImage as string) || "/images/defaultImage.svg"
+              })`,
               backgroundPosition: "center",
               backgroundSize: "cover",
               position: "relative",
@@ -132,8 +138,19 @@ export const MapProjectInfo: FC<IProps> = ({ project, onClose }) => {
             </span> */}
           </div>
           <Flex vertical>
-            <T5 style={{ color: colors.text.title }}>{project?.Prj_Name}</T5>
-            <Flex gap={8} className="!h-[32px]">
+            <T5
+              style={{
+                color: colors.text.title,
+                maxWidth: isMobile ? 356 : "auto",
+              }}
+            >
+              {project?.Prj_Name}
+            </T5>
+            <Flex
+              gap={8}
+              className="!h-[32px]"
+              style={{ maxWidth: isMobile ? 356 : "auto" }}
+            >
               <C3
                 style={{
                   color: colors.text.secondaryText,

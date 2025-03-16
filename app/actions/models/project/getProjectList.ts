@@ -33,6 +33,8 @@ export interface IProject {
   Cust: string;
   Pmap_Lat: number;
   Pmap_Long: number;
+  Image_Default: string | Buffer;
+  image: string;
 }
 
 export interface IMap {

@@ -5,7 +5,9 @@ import { FC } from "react";
 import { useDashboard } from "../context";
 
 export const ProjectTable: FC = () => {
-  const { projectList, loading, setProjectId } = useDashboard();
+  const { projectList, loading, setProjectId, setCurrentProjectImage } =
+    useDashboard();
+  console.log({ projectList });
   const columns: TableProps<IProject>["columns"] = [
     {
       title: "#",
@@ -16,6 +18,7 @@ export const ProjectTable: FC = () => {
       title: "کد",
       dataIndex: "Prj_ID",
       key: "Prj_ID",
+      sorter: (a, b) => Number(a.Prj_ID) - Number(b.Prj_ID),
     },
     {
       title: "عنوان پروژه ",
@@ -48,6 +51,7 @@ export const ProjectTable: FC = () => {
       dataIndex: "Prj_TotalCredit",
       key: "Prj_TotalCredit",
       render: (text) => Number(text)?.toLocaleString("fa-IR"),
+      sorter: (a, b) => Number(a.Prj_TotalCredit) - Number(b.Prj_TotalCredit),
     },
     {
       title: "پیشرفت",
@@ -55,6 +59,7 @@ export const ProjectTable: FC = () => {
       key: "PhisicalProgress",
       width: 110,
       render: (text) => <Progress percent={text} />,
+      sorter: (a, b) => Number(a.PhisicalProgress) - Number(b.PhisicalProgress),
     },
     {
       title: "تاریخ شروع",
@@ -72,6 +77,9 @@ export const ProjectTable: FC = () => {
           onRow={(record) => ({
             onClick: () => {
               setProjectId(record?.Prj_ID);
+              setCurrentProjectImage(
+                record?.Image_Default as string | undefined
+              );
             },
             className: "cursor-pointer select-none",
           })}

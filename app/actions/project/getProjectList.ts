@@ -3,6 +3,7 @@ import { connectDB } from "@/lib/db";
 import { checkToken } from "@/lib/checkToken";
 import sql from "mssql";
 import { IGetProjectArg, IProject } from "../models";
+import { detectMimeType, uint8ArrayToBase64 } from "@/lib/binarryToBase64";
 
 interface IResponse {
   success: boolean;
@@ -45,7 +46,22 @@ export async function getProjectList(
     if (!result || !result?.recordset) {
       return { success: false, error: "unknown error" };
     }
-    return { success: true, data: result?.recordset };
+    const resultData: IProject[] = result?.recordset.map((i) => {
+      const mimeType = detectMimeType(i.Image_Default);
+      const base64String = uint8ArrayToBase64(i.Image_Default);
+      const imageUrl =
+        base64String && mimeType
+          ? `data:${mimeType};base64,${base64String}`
+          : "";
+      return {
+        ...i,
+        Image_Default: imageUrl,
+      };
+    });
+
+    resultData.sort((a, b) => Number(b.Prj_ID) - Number(a.Prj_ID));
+
+    return { success: true, data: resultData };
   } catch (error) {
     console.error("Error:", error);
     return { success: false, error: "Internal server error" };

@@ -12,7 +12,7 @@ import { FilterModalMobile } from "./FilterModal";
 // import MapComponent from "./Map";
 const MapComponent = dynamic(() => import("./Map"), { ssr: false });
 export const MapSessionMobile: FC = () => {
-  const { setShowFilter } = useMap();
+  const { setShowFilter, setCurrentProjectImage } = useMap();
   const [projectDetail, setProjectDetail] = useState<
     IProjectById | undefined
   >();
@@ -60,7 +60,10 @@ export const MapSessionMobile: FC = () => {
         >
           <MapProjectInfo
             project={projectDetail}
-            onClose={() => setProjectDetail(undefined)}
+            onClose={() => {
+              setProjectDetail(undefined);
+              setCurrentProjectImage(undefined);
+            }}
           />
         </Modal>
         <FilterModalMobile />

@@ -9,6 +9,7 @@ import {
   IProject,
   ISubjectType,
 } from "../models";
+import { detectMimeType, uint8ArrayToBase64 } from "@/lib/binarryToBase64";
 
 interface IResponse {
   success: boolean;
@@ -69,16 +70,29 @@ export async function getMapProjectList(
         (subject) =>
           subject.Pst_ID.toString() === project.Prj_SubjectType.toString()
       );
+
       const imageUrl = subjectType
         ? `data:image/png;base64,${subjectType.Pst_PlaceMarker.toString(
             "base64"
           )}`
         : "";
-
+      const mimeType = detectMimeType(project.Image_Default as Buffer);
+      const base64String = uint8ArrayToBase64(project.Image_Default as Buffer);
+      const imageDefault =
+        base64String && mimeType
+          ? `data:${mimeType};base64,${base64String}`
+          : "";
+      // const imageDefault = Buffer.from(
+      //   project.Image_Default as Buffer
+      // ).toString("base64");
+      // `data:image/png;base64,${(
+      //         project.Image_Default as Buffer
+      //       ).toString("base64")}`;
       return {
         ...project,
         map: map || null,
         marker: imageUrl,
+        Image_Default: imageDefault,
       };
     });
     return { success: true, data: newProjectList };

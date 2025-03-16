@@ -28,7 +28,7 @@ export const ProjectCard: FC<IProps> = ({ project }) => {
   const {
     theme: { colors },
   } = useTheme();
-  const { setProjectId } = useDashboard();
+  const { setProjectId, setCurrentProjectImage } = useDashboard();
   return (
     <CardContainer>
       <Col span={4} className="pl-[40px] ">
@@ -38,7 +38,10 @@ export const ProjectCard: FC<IProps> = ({ project }) => {
               style={{
                 width: 150,
                 height: 150,
-                background: "url(/images/project.png)",
+                background: `url(${
+                  (project?.Image_Default as string) ||
+                  "/images/defaultImage.svg"
+                })`,
                 backgroundPosition: "center",
                 backgroundSize: "cover",
                 position: "relative",
@@ -295,6 +298,9 @@ export const ProjectCard: FC<IProps> = ({ project }) => {
                   className="flex justify-center items-center"
                   onClick={() => {
                     setProjectId(project?.Prj_ID);
+                    setCurrentProjectImage(
+                      project?.Image_Default as string | undefined
+                    );
                   }}
                 >
                   <span>بیشتر</span>

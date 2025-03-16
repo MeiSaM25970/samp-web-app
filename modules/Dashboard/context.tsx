@@ -31,6 +31,9 @@ interface IContext {
   showFilter: boolean;
   projectId: string | undefined;
   search: string | undefined;
+  currentProjectImage: string | undefined;
+  setCurrentProjectImage: Dispatch<SetStateAction<string | undefined>>;
+
   setSearch: Dispatch<SetStateAction<string | undefined>>;
   setProjectId: Dispatch<SetStateAction<string | undefined>>;
   setFilter: Dispatch<SetStateAction<IGetProjectArg | undefined>>;
@@ -45,6 +48,7 @@ export const DashboardProvider: FC<PropsWithChildren> = ({ children }) => {
   const [project, setProject] = useState<IProjectById | undefined>();
   const isMobile = useMediaQuery({ maxWidth: breakPointsMd });
   const [projectList, setProjectList] = useState<IProject[]>([]);
+  const [currentProjectImage, setCurrentProjectImage] = useState<string>();
   const [search, setSearch] = useState<string>();
   const get = async () => {
     const { projectDetails, projectList } = await getProject(filter);
@@ -54,7 +58,7 @@ export const DashboardProvider: FC<PropsWithChildren> = ({ children }) => {
       projectList,
     };
   };
-  const { data, isLoading } = useQuery({
+  const { data, isLoading, isFetching } = useQuery({
     queryKey: [queryKeys.getProjectList, filter],
     queryFn: get,
   });
@@ -91,10 +95,12 @@ export const DashboardProvider: FC<PropsWithChildren> = ({ children }) => {
     filter,
     projectDetails: data?.projectDetails,
     projectList,
-    loading: isLoading,
+    loading: isLoading || isFetching,
     projectId,
     search,
     showFilter,
+    currentProjectImage,
+    setCurrentProjectImage,
     setSearch,
     setProjectId,
     setFilter,
@@ -107,6 +113,7 @@ export const DashboardProvider: FC<PropsWithChildren> = ({ children }) => {
         onCancel={() => {
           setProject(undefined);
           setProjectId(undefined);
+          setCurrentProjectImage(undefined);
         }}
         footer={null}
         style={{ top: 8 }}
