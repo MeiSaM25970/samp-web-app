@@ -8,6 +8,7 @@ export const fireError = (title: string, text: string) => {
     confirmButtonText: `باشه`,
     background: "#fff",
     width: 280,
-    iconHtml: '<img src="/img/alertError.svg" width="40px" height="40px">',
+    iconHtml:
+      '<img src="/images/sweet-alert/error.svg" width="40px" height="40px">',
   });
 };

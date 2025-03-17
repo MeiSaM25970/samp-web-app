@@ -4,7 +4,7 @@ const nextConfig = {
   compiler: {
     styledComponents: true,
   },
-  webpack: (config, { isServer }) => {
+  webpack: (config) => {
     // برای پشتیبانی از ماژول‌های ES
     config.module.rules.push({
       test: /\.m?js$/,
@@ -13,12 +13,7 @@ const nextConfig = {
         fullySpecified: false,
       },
     });
-    if (isServer) {
-      config.module.rules.push({
-        test: /\.node$/,
-        use: "node-loader",
-      });
-    }
+
     return config;
   },
   reactStrictMode: false,
