@@ -1,3 +1,11 @@
+export interface IWeight {
+  WBS_BeginDate: string;
+  WBS_EndDate: string;
+  WBS_ID: string;
+  WBS_Name: string;
+  WBS_Weight: number;
+  WbsProgress: number;
+}
 export interface IProjectById {
   Prj_ID: string;
   Prj_Name: string;
@@ -37,4 +45,5 @@ export interface IProjectById {
   Pmap_Lat: number;
   Pmap_Long: number;
   Image_Default: string;
+  weights: IWeight[];
 }

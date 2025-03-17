@@ -19,39 +19,43 @@ export async function GET(
         { status: 400 }
       );
     }
+    // await client.connect("46.100.55.147", 7453);
+    // await client.login("ftpuser", "Ftp@789654123");
 
-    await client.access({
-      host: process.env.FTP_HOST,
-      port: Number(process.env.FTP_PORT),
-      user: process.env.FTP_USER,
-      password: process.env.FTP_PASS,
-      secure: false,
-    });
-    const filePath = `/${decodeURIComponent(filename)}`;
-    const mimeType = mime.getType(filePath) || "application/octet-stream";
+    // await client.access({
+    //   host: process.env.FTP_HOST,
+    //   port: Number(process.env.FTP_PORT),
+    //   user: process.env.FTP_USER,
+    //   password: process.env.FTP_PASS,
+    //   secure: false,
+    // });
+    // const decodeFilePath = decodeURIComponent(filename);
+    // const filePath = `/Attachments/${decodeFilePath}`;
+    // const mimeType = mime.getType(filePath) || "application/octet-stream";
+    // console.log({ decodeFilePath, filePath, mimeType });
+    // let fileBuffer = Buffer.alloc(0);
+    // const writable = new Writable({
+    //   write(chunk, encoding, callback) {
+    //     fileBuffer = Buffer.concat([fileBuffer, chunk]);
+    //     callback();
+    //   },
+    // });
 
-    let fileBuffer = Buffer.alloc(0);
-    const writable = new Writable({
-      write(chunk, encoding, callback) {
-        fileBuffer = Buffer.concat([fileBuffer, chunk]);
-        callback();
-      },
-    });
-
-    await client.downloadTo(writable, filePath);
+    // await client.downloadTo(writable, filePath);
     await client.close();
 
-    return new NextResponse(fileBuffer, {
-      headers: {
-        "Content-Type": mimeType,
-        "Content-Length": fileBuffer.length.toString(),
-      },
-    });
+    return new NextResponse(undefined, { status: 200 });
+    // return new NextResponse(fileBuffer, {
+    //   headers: {
+    //     "Content-Type": mimeType,
+    //     "Content-Length": fileBuffer.length.toString(),
+    //   },
+    // });
   } catch (error) {
     console.error("FTP Error:", error);
     return NextResponse.json(
       { error: "Failed to retrieve file from FTP" },
-      { status: 500 }
+      { status: 200 }
     );
   } finally {
     client.close();

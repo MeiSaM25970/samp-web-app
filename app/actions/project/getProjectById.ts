@@ -22,6 +22,10 @@ export async function getProjectById(projectId: string): Promise<IResponse> {
       ?.request()
       .input("Prj_ID", sql.NVarChar, projectId.toString())
       .execute("PMO_Project_Info");
+    const resultWeight = await db
+      ?.request()
+      .input("Prj_ID", sql.NVarChar, projectId.toString())
+      .execute("PMO_Project_WBS");
     if (!result || !result?.recordset.length) {
       return { success: false, error: "Notfound" };
     }
@@ -33,10 +37,7 @@ export async function getProjectById(projectId: string): Promise<IResponse> {
     resultData = {
       ...resultData,
       Image_Default: imageDefault,
-
-      // `data:image/jpg;base64,${(
-      //   resultData.Image_Default as Buffer
-      // ).toString("base64")}`,
+      weights: resultWeight?.recordset || [],
     };
     return { success: true, data: resultData };
   } catch (error) {

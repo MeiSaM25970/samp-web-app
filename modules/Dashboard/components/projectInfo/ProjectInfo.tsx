@@ -28,6 +28,7 @@ export const ProjectInfo: FC<IProps> = ({ project }) => {
       if (res) return res;
     },
   });
+  console.log({ project });
   const { currentProjectImage } = useDashboard();
   const items: TabsProps["items"] = [
     {
@@ -39,29 +40,35 @@ export const ProjectInfo: FC<IProps> = ({ project }) => {
       key: "2",
       label: "ساختار شکست",
       children: (
-        <div className="projectProgress">
-          <C4 className="w-full">{project?.Unit}</C4>
-          <Flex gap={6} vertical className="w-full">
-            <Flex justify="space-between">
-              <C8 style={{ color: colors.text.thirdText }}>میزان پیشرفت :</C8>
-              <C5>{project?.Percent_Progressed || 0}%</C5>
-            </Flex>
-            <Progress
-              className="!w-full"
-              trailColor="rgb(202, 202, 202)"
-              percent={project?.Percent_Progressed}
-              type="line"
-              status="active"
-              showInfo={false}
-            />
-          </Flex>
-          <Flex justify="space-between" className="w-full">
-            <C9 style={{ color: colors.text.thirdText }}>وزن :</C9>
-            <C5 style={{ color: colors.text.thirdText }}>
-              {project?.PhisicalProgress}
-            </C5>
-          </Flex>
-        </div>
+        <Flex vertical gap={16}>
+          {project?.weights.map((weight) => (
+            <div className="projectProgress" key={weight.WBS_ID}>
+              <C4 className="w-full">{weight.WBS_Name}</C4>
+              <Flex gap={6} vertical className="w-full">
+                <Flex justify="space-between">
+                  <C8 style={{ color: colors.text.thirdText }}>
+                    میزان پیشرفت :
+                  </C8>
+                  <C5>{weight?.WbsProgress || 0}%</C5>
+                </Flex>
+                <Progress
+                  className="!w-full"
+                  trailColor="rgb(202, 202, 202)"
+                  percent={weight?.WbsProgress}
+                  type="line"
+                  status="active"
+                  showInfo={false}
+                />
+              </Flex>
+              <Flex justify="space-between" className="w-full">
+                <C9 style={{ color: colors.text.thirdText }}>وزن :</C9>
+                <C5 style={{ color: colors.text.thirdText }}>
+                  {weight.WBS_Weight}
+                </C5>
+              </Flex>
+            </div>
+          ))}
+        </Flex>
       ),
     },
     {
