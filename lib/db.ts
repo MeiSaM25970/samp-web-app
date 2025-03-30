@@ -3,8 +3,8 @@ import sql from "mssql";
 const config = {
   user: "Valizade",
   password: "Front@Valizade",
-  server: "46.100.55.147", // مثلا: 'localhost' یا '192.168.1.100'
-  port: 7454,
+  server: process.env.DB_HOST ||"", // مثلا: 'localhost' یا '192.168.1.100'
+  port:parseInt(process.env.DB_PORT) ,
   database: "Db_PMO",
   options: {
     encrypt: false, // اگر از Azure استفاده می‌کنی، true بگذار
