@@ -45,7 +45,10 @@ const MapComponent: React.FC<IProps> = ({ setProjectDetail, setLoading }) => {
       zoom={isMobile ? 4.4 : 5.3}
       touchZoom={"center"}
     >
-      <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+      <TileLayer
+        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        subdomains={["mt1", "mt2", "mt3"]}
+      />
       {mapProjectList?.map((project, index) => {
         if (project.map && project.map.length > 1) {
           const positions: LatLngExpression[] = project.map.map((i) => [
