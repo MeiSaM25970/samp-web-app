@@ -9,7 +9,6 @@ import dynamic from "next/dynamic";
 import { useTheme } from "@/app/theme";
 import Icons from "espil-icons";
 import { FilterModalMobile } from "./FilterModal";
-// import MapComponent from "./Map";
 const MapComponent = dynamic(() => import("./Map"), { ssr: false });
 export const MapSessionMobile: FC = () => {
   const { setShowFilter, setCurrentProjectImage } = useMap();

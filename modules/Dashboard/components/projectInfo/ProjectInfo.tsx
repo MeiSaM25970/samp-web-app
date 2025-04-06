@@ -28,7 +28,6 @@ export const ProjectInfo: FC<IProps> = ({ project }) => {
       if (res) return res;
     },
   });
-  console.log({ project });
   const { currentProjectImage } = useDashboard();
   const items: TabsProps["items"] = [
     {
