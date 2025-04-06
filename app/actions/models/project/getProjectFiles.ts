@@ -9,4 +9,5 @@ export interface IProjectFile {
   Archive_FileName: string;
   Archive_Extention: string;
   Archive_SavedName: string;
+  Archive_byteFile: string | null;
 }

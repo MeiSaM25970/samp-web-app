@@ -5,6 +5,7 @@ import {
   TileLayer,
   Marker,
   useMap as useLeafletMap,
+  LayersControl,
 } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import { useMap } from "../context";
@@ -45,10 +46,20 @@ const MapComponent: React.FC<IProps> = ({ setProjectDetail, setLoading }) => {
       zoom={isMobile ? 4.4 : 5.3}
       touchZoom={"center"}
     >
-      <TileLayer
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        subdomains={["mt1", "mt2", "mt3"]}
-      />
+      <LayersControl position="bottomleft">
+        <LayersControl.BaseLayer checked name="Satellite">
+          <TileLayer
+            url="https://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}"
+            subdomains={["mt1", "mt2", "mt3"]}
+          />
+        </LayersControl.BaseLayer>
+        <LayersControl.BaseLayer name="Open street">
+          <TileLayer
+            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          />
+        </LayersControl.BaseLayer>
+      </LayersControl>
       {mapProjectList?.map((project, index) => {
         if (project.map && project.map.length > 1) {
           const positions: LatLngExpression[] = project.map.map((i) => [

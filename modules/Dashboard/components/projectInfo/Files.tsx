@@ -6,7 +6,7 @@ import { FilesContainer } from "../../styles/files.style";
 import { C7, C8 } from "@/components/UiKit/Typography";
 import Icons from "espil-icons";
 import { useTheme } from "@/app/theme";
-import axios from "axios";
+
 interface IProps {
   projectFiles: IProjectFile[] | undefined;
   loading: boolean;
@@ -16,46 +16,23 @@ export const FilesComponent: FC<IProps> = ({ projectFiles, loading }) => {
   const {
     theme: { colors },
   } = useTheme();
+  console.log({ projectFiles });
   const [downloadLoading, setDownloadLoading] = useState<boolean>(false);
-  const downloadFile = async (file: IProjectFile) => {
-    try {
-      setDownloadLoading(true);
-      const filename =
-        file.Archive_Category +
-        "/" +
-        file.Archive_Group +
-        "/" +
-        file.Prj_ID +
-        "/" +
-        file.Archive_SavedName;
-      const response = await axios.get<Blob>(
-        `/api/files/${encodeURIComponent(filename)}`,
-        {
-          responseType: "blob",
-        }
-      );
-      if (response) {
-        const blob = new Blob([response.data], {
-          type: response.headers["content-type"] || "application/octet-stream",
-        });
-        const url = URL.createObjectURL(blob);
+  const downloadFile = async (
+    file: string,
+    name: string,
+    extension: string
+  ) => {
+    setDownloadLoading(true);
 
-        const el = document.createElement("a");
-        el.href = url;
-        el.style.display = "none";
-        el.download = `${file.Archive_FileName}.${file.Archive_Extention}`;
-        document.body.appendChild(el);
-        el.click();
+    const el = document.createElement("a");
+    el.href = file;
+    el.style.display = "none";
+    el.download = `${name}.${extension}`;
+    document.body.appendChild(el);
+    el.click();
 
-        // پاک کردن لینک از حافظه
-        URL.revokeObjectURL(url);
-        document.body.removeChild(el);
-      }
-    } catch (e) {
-      console.log(e);
-    } finally {
-      setDownloadLoading(false);
-    }
+    setDownloadLoading(false);
   };
   if (loading) return <Spin size="small">درحال بارگذاری</Spin>;
   if (!projectFiles || !projectFiles.length) {
@@ -70,18 +47,9 @@ export const FilesComponent: FC<IProps> = ({ projectFiles, loading }) => {
       {downloadLoading && <Spin fullscreen />}
       {projectFiles.map((file, index) => {
         if (imageExtension.includes(file.Archive_Extention)) {
-          const filename =
-            file.Archive_Category +
-            "/" +
-            file.Archive_Group +
-            "/" +
-            file.Prj_ID +
-            "/" +
-            file.Archive_SavedName;
-
           return (
             <Image
-              src={`/api/files/${encodeURIComponent(filename)}`}
+              src={file.Archive_byteFile || "/images/defaultImage.svg"}
               key={index}
               alt={file.Archive_FileName}
               className="container"
@@ -95,10 +63,14 @@ export const FilesComponent: FC<IProps> = ({ projectFiles, loading }) => {
               align="center"
               className="container file"
               onClick={() => {
-                downloadFile(file);
+                downloadFile(
+                  file.Archive_byteFile,
+                  file.Archive_OriginalName,
+                  file.Archive_Extention
+                );
               }}
             >
-              <Flex vertical gap={16}>
+              <Flex vertical gap={16} justify="center" align="center">
                 <Icons name="Entity" size={64} color={colors.icon.icPri} />
                 <C7 className="text-center"> {file.Archive_FileName}</C7>
               </Flex>
