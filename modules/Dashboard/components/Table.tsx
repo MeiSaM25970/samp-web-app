@@ -7,7 +7,6 @@ import { useDashboard } from "../context";
 export const ProjectTable: FC = () => {
   const { projectList, loading, setProjectId, setCurrentProjectImage } =
     useDashboard();
-  console.log({ projectList });
   const columns: TableProps<IProject>["columns"] = [
     {
       title: "#",

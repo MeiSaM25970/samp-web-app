@@ -16,7 +16,6 @@ export const FilesComponent: FC<IProps> = ({ projectFiles, loading }) => {
   const {
     theme: { colors },
   } = useTheme();
-  console.log({ projectFiles });
   const [downloadLoading, setDownloadLoading] = useState<boolean>(false);
   const downloadFile = async (
     file: string,

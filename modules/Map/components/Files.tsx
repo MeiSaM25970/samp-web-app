@@ -70,18 +70,9 @@ export const FilesComponent: FC<IProps> = ({ projectFiles, loading }) => {
       {downloadLoading && <Spin fullscreen />}
       {projectFiles.map((file, index) => {
         if (imageExtension.includes(file.Archive_Extention)) {
-          const filename =
-            file.Archive_Category +
-            "/" +
-            file.Archive_Group +
-            "/" +
-            file.Prj_ID +
-            "/" +
-            file.Archive_SavedName;
-
           return (
             <Image
-              src={`/api/files/${encodeURIComponent(filename)}`}
+              src={file.Archive_byteFile || "/images/defaultImage.svg"}
               key={index}
               alt={file.Archive_FileName}
               className="container"
